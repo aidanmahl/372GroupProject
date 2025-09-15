@@ -1,4 +1,6 @@
-
+/**
+ * The FoodItem class retrieves food item data and calculates the total price.
+ */
 public class FoodItem {
 	// Properties
 	private String name;
