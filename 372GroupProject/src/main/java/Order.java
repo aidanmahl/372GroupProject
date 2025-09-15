@@ -44,4 +44,23 @@ public class Order {
 
 	// Methods
 	
+	public void startOrder() {
+		
+	}
+	
+	public void completeOrder() {
+		
+	}
+	
+//	public double getPrice() {
+//		
+//	}
+	
+//	public boolean isCompleted() {
+//		
+//	}
+	
+	public void displayOrder() {
+		
+	}
 }
