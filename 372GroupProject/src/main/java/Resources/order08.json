@@ -4,19 +4,19 @@
 		"order_date": 1515354694451,
 		"items": [
 			{
-				"name": "Burger",
+				"name": "Root Beer Float",
 				"quantity": 1,
-				"price": 8.99
+				"price": 5.29
 			},
 			{
-				"name": "Fries",
+				"name": "Grilled Chicken Sandwich",
 				"quantity": 2,
-				"price": 3.99
+				"price": 7.39
 			},
 			{
-				"name": "Milkshake",
+				"name": "Cheese Curds",
 				"quantity": 1,
-				"price": 8.95
+				"price": 4.79
 			}
 		]
 	}

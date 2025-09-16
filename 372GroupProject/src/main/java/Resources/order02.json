@@ -4,19 +4,24 @@
 		"order_date": 1515354694451,
 		"items": [
 			{
-				"name": "Burger",
+				"name": "Crispy Chicken Sandwich",
 				"quantity": 1,
-				"price": 8.99
+				"price": 6.79
 			},
 			{
-				"name": "Fries",
-				"quantity": 2,
-				"price": 3.99
+				"name": "Cheese Curds",
+				"quantity": 1,
+				"price": 4.79
 			},
 			{
-				"name": "Milkshake",
+				"name": "Fountain Drink",
 				"quantity": 1,
-				"price": 8.95
+				"price": 2.79
+			},
+			{
+				"name": "Turtle Sundae",
+				"quantity": 1,
+				"price": 7.29
 			}
 		]
 	}
