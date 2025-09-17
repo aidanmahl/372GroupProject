@@ -41,11 +41,31 @@ something()
 }
 
 class FoodItem {
-
+- name : String
+- quntity : int
+- price : float
 }
 
 class Order {
+- status : String
+- type : String
+- foodList : ArrayList<foodItem>
+- Date : long
+- OrderID : int
+- sumPrice()
+}
 
+class Parser {
++ parseJSONOrder()
++ exportOrder()
+}
+
+class OrderDriver {
+
++ startIncomingOrder()
++ displayIncomingOrder()
++ completeIncomingOrder()
++ displayAll()
 }
 
 
