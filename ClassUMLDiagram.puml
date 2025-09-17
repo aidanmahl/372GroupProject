@@ -3,8 +3,19 @@
 
 abstract class AbstractList
 abstract AbstractCollection
+class Parser
+class FoodItem
+class Order
+class OrderDriver
 interface List
 interface Collection
+interface JSONsimple
+
+
+JSONsimple <|-- Parser
+Parser <|-- Order
+Order <|-- FoodItem
+Parser <|-- OrderDriver
 
 List <|-- AbstractList
 Collection <|-- AbstractCollection
@@ -28,4 +39,14 @@ class AbstractCollection {
 int something
 something()
 }
+
+class FoodItem {
+
+}
+
+class Order {
+
+}
+
+
 @enduml
