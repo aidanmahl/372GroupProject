@@ -13,8 +13,8 @@ interface JSONsimple
 
 
 JSONsimple <|-- Parser
-Parser <|-- Order
-Order <|-- FoodItem
+Order <|-- Parser
+FoodItem <|- Order
 Parser <|-- OrderDriver
 
 List <|-- AbstractList
