@@ -13,6 +13,7 @@ interface JSONsimple
 
 
 JSONsimple <|-- Parser
+Collection <|-- Order
 Order <|-- Parser
 FoodItem <|- Order
 Parser <|-- OrderDriver
@@ -52,20 +53,22 @@ class Order {
 - foodList : ArrayList<foodItem>
 - Date : long
 - OrderID : int
-- sumPrice()
+- totalPrice : float
+- sumPrice(foodList a) : float
+- buildFoodList(FoodItem a) : void
 }
 
 class Parser {
-+ parseJSONOrder()
-+ exportOrder()
++ parseJSONOrder() : Order
++ exportOrder() : void
 }
 
 class OrderDriver {
 
-+ startIncomingOrder()
-+ displayIncomingOrder()
-+ completeIncomingOrder()
-+ displayAll()
++ startIncomingOrder() : void
++ displayIncomingOrder() : void
++ completeIncomingOrder() : void
++ displayAll() : void
 }
 
 
