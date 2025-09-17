@@ -14,16 +14,9 @@ interface JSONsimple
 
 JSONsimple <|-- Parser
 Collection <|-- Order
-Order <|-- Parser
-FoodItem <|- Order
-Parser <|-- OrderDriver
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+Order -- Parser
+FoodItem - Order
+Parser -- OrderDriver
 
 class ArrayList {
 Object[] elementData
