@@ -7,6 +7,12 @@ class Parser
 class FoodItem
 class Order
 class OrderDriver
+/'
+9-19-2025 -Joseph
+I don't think we need to be documenting java util classes in here.
+We should only be documenting classes built in this package.
+If we need to describe a relationship our classes have, that belongs in that classes description no?
+'/
 interface List
 interface Collection
 interface JSONsimple
@@ -36,19 +42,33 @@ something()
 
 class FoodItem {
 - name : String
-- quntity : int
+- quantity : int
 - price : float
++ setName(String name) : void
++ setQuantity(int quantity) : void
++ setPrice(float price) : void
++ getName() : String
++ getQuantity() : Integer
++ getPrice() : float
 }
 
 class Order {
 - status : String
 - type : String
-- foodList : ArrayList<foodItem>
+- foodList : ArrayList<FoodItem>
 - Date : long
 - OrderID : int
 - totalPrice : float
-- sumPrice(foodList a) : float
-- buildFoodList(FoodItem a) : void
+- sumPrice(foodList f) : float
+- buildFoodList(FoodItem f) : void
++ updateStatus() : Boolean
++ addFoodItem(FoodItem f)) : Boolean
++ getStatus : String
++ getType : String
++ getFoodList : ArrayList<FoodItem>
++ getDate : long
++ getOrderID : int
++ getTotalPrice : float
 }
 
 class Parser {
@@ -57,11 +77,16 @@ class Parser {
 }
 
 class OrderDriver {
-
-+ startIncomingOrder() : void
+- orders : List<Order>
+- incompleteOrders : List<Order>
+- completeOrder : List<Order>
+- incomingOrder : Order
++ startIncomingOrder(order) : void
 + displayIncomingOrder() : void
 + completeIncomingOrder() : void
 + displayAll() : void
++ addOrder(Order order) : Boolean
++ completeAllOrders() : Boolean
 }
 
 
