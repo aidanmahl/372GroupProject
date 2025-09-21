@@ -13,7 +13,7 @@ public class Parser {
 		e.printStackTrace();
 		System.out.println("Error: " + e.getMessage());
 	}
-		
+		// Just so I won't get an error
         return new Order(orderId, type, date, foodItems);
 	}
 }
