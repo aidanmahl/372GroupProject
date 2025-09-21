@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Parser {
-	public static Order parseOrder(String file, int orderId) {
+	public static Order parseJSONOrder(String file, int orderId) {
 		String type = "";
 		long date = 0;
 		List<FoodItem> foodItems = new ArrayList<>();
