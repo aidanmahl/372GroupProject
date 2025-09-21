@@ -61,12 +61,12 @@ public class Order {
 
 	// Methods
 	/**
-	 * Calculates the total price of every food item in the list.
+	 * Recalculates the total price of the current food list.
 	 * 
 	 * @return the total sum price of the order
 	 */
-	private double sumPrice() {
-		double sum = 0.00;
+	public double sumPrice() {
+		double sum = 0.0;
 
 		if(foodList == null) {
 			return 0;
@@ -97,24 +97,13 @@ public class Order {
 			foodList = new ArrayList<>();
 		}
 
-		return foodList.add(f);
-	}
+		boolean priceUpdate = foodList.add(f);
 
-	/**
-	 * Adds a FoodItem to the order's food list.
-	 * Initializes the list if it has not been created yet.
-	 * 
-	 * @param f FoodItem
-	 */
-	private void buildFoodList(FoodItem f) {
-		if(f == null) {
-			return;
+		if(priceUpdate) {
+			totalPrice = sumPrice();
 		}
 
-		if (foodList == null) {
-			foodList = new ArrayList<>();
-		}
-		foodList.add(f);
+		return priceUpdate;
 	}
 
 	public void completeOrder() {
