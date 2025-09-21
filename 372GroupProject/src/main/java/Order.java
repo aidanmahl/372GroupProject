@@ -21,14 +21,20 @@ public class Order {
 		this.status = "incoming";
 	}
 
-//	public Order(int orderId, String orderType, List<String> foodItems, LocalDateTime orderTime) {
-//		this.orderId = orderId;
-//		this.type = orderType;
-//		this.foodItems = foodItems;
-//		this.orderTime = LocalDateTime.now();
-//		this.orderStatus = "INCOMPLETE";
-//	}
-//	
+	// Constructor
+	public Order(int orderId, String type, long date, List<FoodItem> foodList) {
+		this.orderId = orderId;
+		this.type = type;
+		this.date = date;
+		if (foodList != null) {
+		    this.foodList = new ArrayList<>(foodList);
+		} else {
+		    this.foodList = new ArrayList<>();
+		}
+		this.status = "incoming";
+		this.totalPrice = sumPrice();
+	}
+	
 	// Getters
 	public int getOrderId() {
 		return orderId;
