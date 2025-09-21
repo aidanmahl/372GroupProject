@@ -9,7 +9,7 @@ public class Order {
 	// Properties
 	private int orderId;
 	private long date;
-	private float totalPrice;
+	private double totalPrice;
 	private String type;
 	private String status;
 	private ArrayList<FoodItem> foodList;
@@ -43,7 +43,7 @@ public class Order {
 		return date;
 	}
 
-	public float getTotalPrice() {
+	public double getTotalPrice() {
 		return totalPrice;
 	}
 
@@ -65,8 +65,8 @@ public class Order {
 	 * 
 	 * @return the total sum price of the order
 	 */
-	private float sumPrice() {
-		float sum = 0;
+	private double sumPrice() {
+		double sum = 0.00;
 
 		if(foodList == null) {
 			return 0;
