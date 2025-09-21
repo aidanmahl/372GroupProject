@@ -5,7 +5,6 @@
  */
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List; 
 
 public class Order {
@@ -16,9 +15,14 @@ public class Order {
 	private List<String> foodItems;
 	private String orderStatus;
 	
-	// Empty Constructor
+	public Order(int orderId, String orderType, List<String> foodItems, LocalDateTime orderTime) {
+		this.orderId = orderId;
+		this.orderType = orderType;
+		this.foodItems = foodItems;
+		this.orderTime = LocalDateTime.now();
+		this.orderStatus = "INCOMPLETE";
+	}
 	
-	// Constructor
 	
 	// Getters
 	
@@ -49,8 +53,9 @@ public class Order {
 	}
 	
 	public void completeOrder() {
-		
+		orderStatus = "COMPLETED";
 	}
+
 	
 //	public double getPrice() {
 //		
