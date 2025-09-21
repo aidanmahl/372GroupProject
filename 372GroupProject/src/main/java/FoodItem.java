@@ -5,17 +5,17 @@ public class FoodItem {
 	// Properties
 	private String name;
 	private int quantity;
-	private float price;
+	private double price;
 
 	// Empty Constructor
 	public FoodItem() {
 		this.name = "N/A";
 		this.quantity = 0;
-		this.price = 0.0f;
+		this.price = 0.00;
 	}
 	
 	// Constructor
-	public FoodItem(String name, int quantity, float price) {
+	public FoodItem(String name, int quantity, double price) {
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
@@ -38,7 +38,7 @@ public class FoodItem {
 		this.quantity = quantity;
 	}	
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
