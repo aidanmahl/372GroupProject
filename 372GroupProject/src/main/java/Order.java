@@ -3,7 +3,6 @@
  */
 
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 import java.util.List; 
 
 public class Order {
@@ -118,9 +117,9 @@ public class Order {
 		foodList.add(f);
 	}
 
-//	public void completeOrder() {
-//		orderStatus = "COMPLETED";
-//	}
+	public void completeOrder() {
+		status = "COMPLETED";
+	}
 
 	
 	/**
