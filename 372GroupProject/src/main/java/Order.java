@@ -13,7 +13,7 @@ public class Order {
 	private String type;
 	private String status;
 	private ArrayList<FoodItem> foodList;
-	
+
 	// Empty constructor
 	public Order() {
 		this.foodList = new ArrayList<>();
@@ -26,14 +26,14 @@ public class Order {
 		this.type = type;
 		this.date = date;
 		if (foodList != null) {
-		    this.foodList = new ArrayList<>(foodList);
+			this.foodList = new ArrayList<>(foodList);
 		} else {
-		    this.foodList = new ArrayList<>();
+			this.foodList = new ArrayList<>();
 		}
 		this.status = "incoming";
 		this.totalPrice = sumPrice();
 	}
-	
+
 	// Getters
 	public int getOrderId() {
 		return orderId;
@@ -67,17 +67,17 @@ public class Order {
 	 */
 	private float sumPrice() {
 		float sum = 0;
-		
+
 		if(foodList == null) {
 			return 0;
 		}
-		
+
 		// Calculates the total price of all items in the food list
 		for(int i = 0; i < foodList.size(); i++) {
 			FoodItem item = foodList.get(i);
 			sum = sum + item.getPrice() * item.getQuantity();
 		}
-		
+
 		return sum;
 	}
 
@@ -92,11 +92,11 @@ public class Order {
 		if(f == null) {
 			return false;
 		}
-		
+
 		if(foodList == null) {
 			foodList = new ArrayList<>();
 		}
-		
+
 		return foodList.add(f);
 	}
 
@@ -110,7 +110,7 @@ public class Order {
 		if(f == null) {
 			return;
 		}
-		
+
 		if (foodList == null) {
 			foodList = new ArrayList<>();
 		}
@@ -121,7 +121,7 @@ public class Order {
 		status = "COMPLETED";
 	}
 
-	
+
 	/**
 	 * Updates order status.
 	 * 
