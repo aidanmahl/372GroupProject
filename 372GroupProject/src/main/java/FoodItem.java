@@ -9,9 +9,9 @@ public class FoodItem {
 
 	// Empty Constructor
 	public FoodItem() {
-		this.name = "N/A";
+		this.name = "Null";
 		this.quantity = 0;
-		this.price = 0.00;
+		this.price = 0.0;
 	}
 	
 	// Constructor
