@@ -3,6 +3,8 @@
  */
 
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.List; 
 
 public class Order {
 	// Properties
@@ -19,6 +21,14 @@ public class Order {
 		this.status = "incoming";
 	}
 
+//	public Order(int orderId, String orderType, List<String> foodItems, LocalDateTime orderTime) {
+//		this.orderId = orderId;
+//		this.type = orderType;
+//		this.foodItems = foodItems;
+//		this.orderTime = LocalDateTime.now();
+//		this.orderStatus = "INCOMPLETE";
+//	}
+//	
 	// Getters
 	public int getOrderId() {
 		return orderId;
@@ -65,7 +75,7 @@ public class Order {
 		
 		return sum;
 	}
-	
+
 	/**
 	 * Adds a single FoodItem to the order's food list.
 	 * Initializes the list if it has not been created yet.
@@ -101,6 +111,11 @@ public class Order {
 		}
 		foodList.add(f);
 	}
+
+//	public void completeOrder() {
+//		orderStatus = "COMPLETED";
+//	}
+
 	
 	/**
 	 * Updates order status.
