@@ -7,6 +7,20 @@ public class FoodItem {
 	private int quantity;
 	private float price;
 
+	// Empty Constructor
+	public FoodItem() {
+		this.name = "N/A";
+		this.quantity = 0;
+		this.price = 0.0f;
+	}
+	
+	// Constructor
+	public FoodItem(String name, int quantity, float price) {
+		this.name = name;
+		this.quantity = quantity;
+		this.price = price;
+	}
+	
 	// Getters and setters
 	public String getName() {
 		return name;
