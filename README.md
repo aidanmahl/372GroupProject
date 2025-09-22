@@ -1,6 +1,6 @@
 ICS 372.
 
-While in ../372GroupProject, run main.java to launch user interface. Have at least one order.json in the src/main/java/Resources directory to test functionality.
+While in ../372GroupProject, run Main.java to launch user interface. Have at least one order.json in the src/main/java/Resources directory to test functionality.
 
 # UML Diagram
 
