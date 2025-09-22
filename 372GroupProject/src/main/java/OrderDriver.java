@@ -18,8 +18,8 @@ public class OrderDriver {
         
     }
 
-    public void displayIncomingOrder() {
-       
+    public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
+       return "displayOrder: To be implemented";
     }
 
     public void completeIncomingOrder() {
@@ -30,8 +30,20 @@ public class OrderDriver {
        
     }
 
-    public void addOrder() {
-        
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public boolean addOrder(String orderJSON) {
+        try {
+            Order newOrder = Parser.parseJSONOrder(orderJSON, orders.size() + 1); //creates a new order with the next available ID, starting at 1
+            orders.add(newOrder);
+            incompleteOrders.add(newOrder);
+        } catch (Exception e) {
+            System.out.println("Error parsing JSON: " + e.getMessage());
+            return false;
+        } 
+        return true;   
     }
 
     public void completeAllOrders() {

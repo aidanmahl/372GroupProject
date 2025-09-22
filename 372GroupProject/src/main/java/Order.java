@@ -59,6 +59,10 @@ public class Order {
 		return foodList;
 	}
 
+	public int getOrderID() {
+		return orderId;
+	}
+
 	// Methods
 	/**
 	 * Recalculates the total price of the current food list.
