@@ -133,4 +133,20 @@ public class Order {
 			return false;
 		}
 	}
+
+    /**
+     * (Will need to iterate food list, should be implemented as a toString for foodList object or have to handle array to string implementation. - joseph)
+     * toString method for Order objects. returns a formatted string containing all info from order object
+     * @return String, formatted order
+     */
+    @Override
+    public String toString() {
+        return "OrderId: " + orderId + "\n" +
+                "date: " + date + "\n" +
+                "status: " + status + '\n' +
+                "type: " + type + '\n' +
+                "foodList: " + foodList +
+                "totalPrice: $" + totalPrice +"\n" +
+                "==========";
+    }
 }

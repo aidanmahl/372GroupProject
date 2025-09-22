@@ -21,7 +21,15 @@ public class OrderDriver {
     }
 
     public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
-       return "displayOrder: To be implemented";
+       if(orders.isEmpty()) {
+           return "No orders found";
+       }
+        for(Order order : orders) {
+           if(order.getOrderID() == orderID) {
+               System.out.println(order);
+           }
+       }
+        return "displayOrder: To be implemented";
     }
 
     public void completeIncomingOrder() {
