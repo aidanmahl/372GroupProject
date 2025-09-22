@@ -63,12 +63,12 @@ class Order {
 - buildFoodList(FoodItem f) : void
 + updateStatus() : Boolean
 + addFoodItem(FoodItem f)) : Boolean
-+ getStatus : String
-+ getType : String
-+ getFoodList : ArrayList<FoodItem>
-+ getDate : long
-+ getOrderID : int
-+ getTotalPrice : float
++ getStatus() : String
++ getType() : String
++ getFoodList() : ArrayList<FoodItem>
++ getDate() : long
++ getOrderID() : int
++ getTotalPrice() : float
 }
 
 class Parser {
