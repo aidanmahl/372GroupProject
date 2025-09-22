@@ -1,0 +1,28 @@
+{
+	"order": {
+		"type": "togo",
+		"order_date": 1758029400000,
+		"items": [
+			{
+				"name": "Crispy Chicken Sandwich",
+				"quantity": 1,
+				"price": 6.79
+			},
+			{
+				"name": "Cheese Curds",
+				"quantity": 1,
+				"price": 4.79
+			},
+			{
+				"name": "Fountain Drink",
+				"quantity": 1,
+				"price": 2.79
+			},
+			{
+				"name": "Turtle Sundae",
+				"quantity": 1,
+				"price": 7.29
+			}
+		]
+	}
+}
