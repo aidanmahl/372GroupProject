@@ -1,3 +1,4 @@
+package main.java;
 
 // Main class to run the order management system. Launches a simple GUI for user interaction.
 public class Main {
