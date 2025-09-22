@@ -1,0 +1,18 @@
+@startuml
+User -> GUI : startOrderBtn
+GUI -> OrderDriver : startIncomingOrder()
+
+User -> GUI : displayOrderBtn
+GUI -> OrderDriver : displayAll()
+
+User -> GUI : completeOrderBtn
+GUI -> OrderDriver : completeIncomingOrder()
+
+User -> GUI : displayAllBtn
+GUI -> OrderDriver : displayAll()
+
+User -> GUI : addOrderBtn
+GUI -> OrderDriver : addOrder()
+
+User ->x GUI : exitBtn
+@enduml
