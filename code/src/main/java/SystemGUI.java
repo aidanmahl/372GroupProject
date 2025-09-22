@@ -74,7 +74,7 @@ public class SystemGUI {
     // helpers method to show a file chooser dialog and read the selected JSON file. defaults to the /Resources directory in this project
     // file explorer uses JFileChooser from javax.swing- https://docs.oracle.com/javase/tutorial/uiswing/components/filechooser.html
     private void showFileChooser(JFrame parentFrame) {
-    JFileChooser fileChooser = new JFileChooser("372GroupProject/code/src/main/java/Resources");
+    JFileChooser fileChooser = new JFileChooser("code/src/main/java/Resources");
         fileChooser.setDialogTitle("Select Order JSON File");
         int result = fileChooser.showOpenDialog(parentFrame);
         if (result == JFileChooser.APPROVE_OPTION) {
