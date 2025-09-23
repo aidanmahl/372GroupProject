@@ -129,15 +129,15 @@ public class Order {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for(FoodItem foodItem: foodList){
-            s.append("\n"+ foodItem.getQuantity() +" " + foodItem.getName() + " $" + foodItem.getPrice());
+            s.append("\n    "+ foodItem.getQuantity() +"x " + foodItem.getName() + "- $" + foodItem.getPrice());
         }
-        return "OrderId: " + orderId + "\n" +
-                "date: " + date + "\n" +
-                "status: " + status + '\n' +
-                "type: " + type + '\n' +
-                "foodList: " +
+        return "Order ID: " + orderId + "\n" +
+                "Date: " + date + "\n" +
+                "Status: " + status + '\n' +
+                "Type: " + type + '\n' +
+                "Items: " +
                 s +
-                "\ntotalPrice: $" + totalPrice + "\n" +
-                "==========";
+                "\nTotal Price: $" + totalPrice + "\n" +
+                "==================";
     }
 }
