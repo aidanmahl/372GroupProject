@@ -16,42 +16,45 @@ public class OrderDriver {
         incomingOrder = null;
     }
 
-    public void startIncomingOrder() {
-        
+    public void startOrder(Order order) {
+
     }
 
     public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
-       if(orders.isEmpty()) {
-           return "No orders found";
-       }
-        for(Order order : orders) {
-           if(order.getOrderID() == orderID) {
-               System.out.println(order);
-           }
-       }
+        if (orders.isEmpty()) {
+            return "No orders found";
+        }
+        for (Order order : orders) {
+            if (order.getOrderID() == orderID) {
+                System.out.println(order);
+            }
+        }
         return "displayOrder: To be implemented";
     }
 
-    public void completeIncomingOrder() {
-        
+    public void completeOrder() {
+
     }
 
-    public void displayAll() {
-       
-    }
 
     public List<Order> getOrders() {
         return orders;
     }
 
     public boolean addOrder(Order order) {
-        if(!orders.contains(order)) {
+        if (!orders.contains(order)) {
             orders.add(order);
+            return true;
         }
-         return false;
+        return false; //duplicate order
     }
 
     public void completeAllOrders() {
-        
+
     }
+
+    public boolean exportOrderToJSON(String filename) {
+        return false; //to be implemented
+    }
+
 }

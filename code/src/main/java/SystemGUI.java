@@ -21,16 +21,15 @@ public class SystemGUI {
 
         //create buttons for each action
         JButton startOrderBtn = new JButton("Start Incoming Order");
-        JButton displayOrderBtn = new JButton("Display Incoming Order");
-        JButton completeOrderBtn = new JButton("Complete Incoming Order");
-        JButton displayAllBtn = new JButton("Display All Orders");
+        JButton completeOrderBtn = new JButton("Complete Order");
+        JButton displayOrderBtn = new JButton("Display Order");
         JButton addOrderBtn = new JButton("Add New Order JSON");
-        JButton completeAllBtn = new JButton("Complete All Orders");
+        JButton exportBtn = new JButton("Export All Orders to JSON");
         JButton exitBtn = new JButton("Exit");
 
         //add action listeners to each button to call the appropriate method in OrderDriver
         
-        startOrderBtn.addActionListener(e -> driver.startIncomingOrder());
+        startOrderBtn.addActionListener(e -> driver.startOrder());
 
         //displays the information of an order. unimplemented for now
         displayOrderBtn.addActionListener(e -> {
@@ -45,15 +44,13 @@ public class SystemGUI {
             }
         });
 
-        completeOrderBtn.addActionListener(e -> driver.completeIncomingOrder());
+        completeOrderBtn.addActionListener(e -> driver.completeOrder());
 
-        // displayall button shows a list of all orders and allows selection to view details of said order
-        displayAllBtn.addActionListener(e -> showOrdersMenu(frame));
+        // display button shows a list of all orders and allows selection to view details of said order
+        displayOrderBtn.addActionListener(e -> showOrdersMenu(frame));
 
         // add order button opens a file chooser to select a JSON file and adds it to the orders list in OrderDriver
         addOrderBtn.addActionListener(e -> showFileChooser(frame));
-
-        completeAllBtn.addActionListener(e -> driver.completeAllOrders());
 
         exitBtn.addActionListener(e -> frame.dispose());
 
@@ -62,9 +59,8 @@ public class SystemGUI {
         frame.add(startOrderBtn);
         frame.add(displayOrderBtn);
         frame.add(completeOrderBtn);
-        frame.add(displayAllBtn);
         frame.add(addOrderBtn);
-        frame.add(completeAllBtn);
+        frame.add(exportBtn);
         frame.add(exitBtn);
 
         frame.setLocationRelativeTo(null);
@@ -83,14 +79,10 @@ public class SystemGUI {
             File selectedFile = fileChooser.getSelectedFile();
             try {
                 // parse json
-                boolean success = driver.addOrder(Parser.parseJSONOrder(selectedFile, 1));
-                if (success) {
-                    JOptionPane.showMessageDialog(parentFrame, "Order successfully parsed and placed into an Order.");
-                } else {
-                    JOptionPane.showMessageDialog(parentFrame, "Failed to parse and add the order.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                driver.addOrder(Parser.parseJSONOrder(selectedFile, 1));
+                JOptionPane.showMessageDialog(parentFrame, "Order successfully parsed and placed into an Order.");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(parentFrame, "Error reading file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(parentFrame, "Failed to parse and add the order.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
