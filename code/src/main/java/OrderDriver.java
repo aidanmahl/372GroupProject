@@ -14,46 +14,46 @@ public class OrderDriver {
         completeOrders = new ArrayList<>();
     }
 
-    public void startOrder() {
+    public void addOrder(Order order) {
+        orders.add(order);
+        incompleteOrders.add(order);
+    }
 
+    public void startOrder(Order order) {
+        order.setStatus("IN PROGRESS"); // Corrected method name
+    }
+
+    public void completeOrder(Order order) {
+        order.setStatus("COMPLETED"); // Corrected method name
+        incompleteOrders.remove(order);
+        completeOrders.add(order);
+    }
+
+    public void completeAllOrders() {
+        for (Order order : incompleteOrders) {
+            completeOrder(order);
+        }
     }
 
     public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
-        if (orders.isEmpty()) {
-            return "No orders found";
-        }
         for (Order order : orders) {
             if (order.getOrderID() == orderID) {
-                System.out.println(order);
+                return order.toString();
             }
         }
-        return "displayOrder: To be implemented";
+        return "Order not found.";
     }
 
-    public void completeOrder() {
-
+    public boolean exportOrdersToJSON(String filename) {
+        return false; //to be implemented
     }
-
 
     public List<Order> getOrders() {
         return orders;
     }
 
-    public boolean addOrder(Order order) {
-        if (!orders.contains(order)) {
-            orders.add(order);
-            incompleteOrders.add(order);
-            return true;
-        }
-        return false; //duplicate order
-    }
+    public List<Order> getCompleteOrders() { return completeOrders; }
 
-    public void completeAllOrders() {
-
-    }
-
-    public boolean exportOrderToJSON(String filename) {
-        return false; //to be implemented
-    }
+    public List<Order> getIncompleteOrders() { return incompleteOrders; }
 
 }
