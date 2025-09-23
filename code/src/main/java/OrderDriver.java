@@ -14,46 +14,52 @@ public class OrderDriver {
         completeOrders = new ArrayList<>();
     }
 
-    public void startOrder() {
+    public void addOrder(Order order) {
+        orders.add(order);
+        incompleteOrders.add(order); // this list maybe not necessary, gui searches by status in for loops
+    }
 
+    public void startOrder(Order order) {
+        // only start if it's incoming, otherwise do nothing
+        if ("INCOMING".equals(order.getStatus())) {
+            order.setStatus("IN PROGRESS");
+        }
+    }
+
+    public void completeOrder(Order order) {
+        // only complete if it's in progress, otherwise do nothing
+        if ("IN PROGRESS".equals(order.getStatus())) {
+            order.setStatus("COMPLETED");
+            incompleteOrders.remove(order);
+            completeOrders.add(order); // maybe not necessary
+        }
+    }
+
+    public void completeAllOrders() {
+        for (Order order : incompleteOrders) {
+            completeOrder(order);
+        }
     }
 
     public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
-        if (orders.isEmpty()) {
-            return "No orders found";
-        }
         for (Order order : orders) {
             if (order.getOrderID() == orderID) {
-                System.out.println(order);
+                return order.toString();
             }
         }
-        return "displayOrder: To be implemented";
+        return "Order not found.";
     }
 
-    public void completeOrder() {
-
+    public boolean exportOrdersToJSON(String filename) {
+        return false; //to be implemented
     }
-
 
     public List<Order> getOrders() {
         return orders;
     }
 
-    public boolean addOrder(Order order) {
-        if (!orders.contains(order)) {
-            orders.add(order);
-            incompleteOrders.add(order);
-            return true;
-        }
-        return false; //duplicate order
-    }
+    public List<Order> getCompleteOrders() { return completeOrders; }
 
-    public void completeAllOrders() {
-
-    }
-
-    public boolean exportOrderToJSON(String filename) {
-        return false; //to be implemented
-    }
+    public List<Order> getIncompleteOrders() { return incompleteOrders; }
 
 }

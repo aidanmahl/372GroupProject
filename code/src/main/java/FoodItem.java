@@ -17,7 +17,7 @@ public class FoodItem {
 	}
 	
 	// Constructor
-	public FoodItem(String name, int quantity, double price) {
+	public FoodItem(String name, int quantity, double price, String type) {
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
@@ -47,4 +47,5 @@ public class FoodItem {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
 }

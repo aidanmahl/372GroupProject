@@ -112,9 +112,9 @@ public class Order {
     }
 
     //INCOMING, IN PROGRESS, COMPLETED
-    public void setSatus(String newStatus) {
-        if (!(newStatus.equals("IN PROGRESS") || newStatus.equals("COMPLETED") || newStatus.equals("INCOMING"))){
-          status = newStatus;
+    public void setStatus(String newStatus) {
+        if (newStatus.equals("IN PROGRESS") || newStatus.equals("COMPLETED") || newStatus.equals("INCOMING")) {
+            status = newStatus;
         }
     }
 
