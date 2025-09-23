@@ -79,7 +79,7 @@ public class SystemGUI {
             File selectedFile = fileChooser.getSelectedFile();
             try {
                 // parse json
-                driver.addOrder(Parser.parseJSONOrder(selectedFile, 1));
+                driver.addOrder(Parser.parseJSONOrder(selectedFile));
                 JOptionPane.showMessageDialog(parentFrame, "Order successfully parsed and placed into an Order.");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(parentFrame, "Failed to parse and add the order.", "Error", JOptionPane.ERROR_MESSAGE);
