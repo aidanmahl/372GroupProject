@@ -6,7 +6,6 @@ package main.java;
 public class FoodItem {
 	// Properties
 	private String name;
-    private String type; //togo or pickup
 	private int quantity;
 	private double price;
 
@@ -15,12 +14,10 @@ public class FoodItem {
 		this.name = "Null";
 		this.quantity = 0;
 		this.price = 0.0;
-        this.type = "Null";
 	}
 	
 	// Constructor
 	public FoodItem(String name, int quantity, double price, String type) {
-        this.type = type;
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
@@ -51,7 +48,4 @@ public class FoodItem {
 		this.price = price;
 	}
 
-    public String getType() { return type; }
-
-    public void setType(String type) { this.type = type; }
 }
