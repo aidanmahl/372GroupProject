@@ -127,12 +127,17 @@ public class Order {
      */
     @Override
     public String toString() {
+        StringBuilder s = new StringBuilder();
+        for(FoodItem foodItem: foodList){
+            s.append("\n"+ foodItem.getQuantity() +" " + foodItem.getName() + " $" + foodItem.getPrice());
+        }
         return "OrderId: " + orderId + "\n" +
                 "date: " + date + "\n" +
                 "status: " + status + '\n' +
                 "type: " + type + '\n' +
-                "foodList: " + foodList +
-                "totalPrice: $" + totalPrice + "\n" +
+                "foodList: " +
+                s +
+                "\ntotalPrice: $" + totalPrice + "\n" +
                 "==========";
     }
 }
