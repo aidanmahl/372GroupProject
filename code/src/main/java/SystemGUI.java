@@ -83,7 +83,7 @@ public class SystemGUI {
             File selectedFile = fileChooser.getSelectedFile();
             try {
                 // parse json
-                boolean success = driver.addOrder(selectedFile.getAbsolutePath());
+                boolean success = driver.addOrder(Parser.parseJSONOrder(selectedFile, 1));
                 if (success) {
                     JOptionPane.showMessageDialog(parentFrame, "Order successfully parsed and placed into an Order.");
                 } else {

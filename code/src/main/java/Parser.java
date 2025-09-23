@@ -1,30 +1,30 @@
 package main.java;
 
-import java.util.*;
+import org.json.simple.JSONArray;
+import org.json.simple.*;
+import org.json.simple.parser.*;
+
 import java.io.*;
 
 public class Parser {
-	public static Order parseJSONOrder(String file, int orderId) {
-		String type = "";
-		long date = 0;
-		List<FoodItem> foodItems = new ArrayList<>();
-		
-		try(BufferedReader reader = new BufferedReader(new FileReader(file))){
-			
-	}catch (IOException e) {
-		e.printStackTrace();
-		System.out.println("Error: " + e.getMessage());
-	}
-		// Just so I won't get an error
-        return new Order(orderId, type, date, foodItems);
-	}
+	public static Order parseJSONOrder(File file, int orderId) throws IOException, ParseException {
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("code/src/main/java/Resources/order_09-16-2025_10-00.json"));
+        Order order = new Order();
+
+        JSONObject orderJson = (JSONObject) jsonObject.get("order");
+        String orderIdS = (String) orderJson.get("orderId");
+
+
+        return null;
+    }
 
 
     /**
      * Main test method for parser class
      */
-    public static void main(String[] args){
-        Order myOrder = Parser.parseJSONOrder("code/src/main/java/Resources/order_09-16-2025_10-00.json", 12);
+    public static void main(String[] args) throws IOException, ParseException {
+        File file = new File("code/src/main/java/Resources/order_09-16-2025_10-00.json");
+        Order myOrder = Parser.parseJSONOrder(file, 12);
         System.out.println(myOrder);
     }
 }
