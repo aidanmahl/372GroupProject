@@ -34,6 +34,7 @@ public class SystemGUI {
      * Creates and displays the main GUI window with buttons for different actions.
      */
     private void createAndShowGUI() {
+        // setting up the main window and buttons
         JFrame frame = new JFrame("ICS 372 Group Project - Order System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -85,7 +86,7 @@ public class SystemGUI {
         java.util.List<Order> orders = driver.getOrders();
         java.util.List<Order> filteredOrders = new ArrayList<>();
 
-        // Filter orders based on the action
+        // filter orders based on what the user wants to do
         for (Order order : orders) {
             if (action == MenuAction.START && "INCOMING".equals(order.getStatus())) {
                 filteredOrders.add(order);
@@ -102,7 +103,7 @@ public class SystemGUI {
         }
 
         String[] orderIDs = new String[filteredOrders.size()];
-        // Display order ID and status in dropdown
+        // showing order id and status so it's easier to pick an order based on user intebnt
         for (int i = 0; i < filteredOrders.size(); i++) {
             orderIDs[i] = "Order #" + filteredOrders.get(i).getOrderID() + " - Status: " + filteredOrders.get(i).getStatus();
         }
@@ -117,7 +118,7 @@ public class SystemGUI {
                 orderIDs[0]
         );
 
-        //send selected order to appropriate action below
+        // grab the actual order object based on what was picked
         if (selected != null) {
             int selectedIndex = java.util.Arrays.asList(orderIDs).indexOf(selected);
             Order selectedOrder = filteredOrders.get(selectedIndex);
@@ -131,6 +132,7 @@ public class SystemGUI {
      */
     private void showDisplayChoiceMenu(JFrame parentFrame) {
         Object[] options = {"Individual Order", "Multiple Orders"};
+        // two buttons
         int choice = JOptionPane.showOptionDialog(
                 parentFrame,
                 "Display an individual order or a group?",
@@ -146,7 +148,7 @@ public class SystemGUI {
         } else if (choice == 1) {
             showDisplayAllMenu(parentFrame);
         }
-        // If dialog is closed or cancelled, do nothing
+        // if they close the dialog, do nothing
     }
 
     /**
@@ -156,6 +158,7 @@ public class SystemGUI {
      */
     private void showDisplayAllMenu(JFrame parentFrame) {
         String[] statuses = {"ALL", "INCOMING", "IN PROGRESS", "COMPLETED"};
+        // let the user pick which group to show
         String selectedStatus = (String) JOptionPane.showInputDialog(
                 parentFrame,
                 "Select the type of orders to display:",
@@ -170,6 +173,7 @@ public class SystemGUI {
         if (selectedStatus != null) {
             java.util.List<Order> orders = driver.getOrders();
             StringBuilder result;
+            // edit the header based on choice
             if ("ALL".equals(selectedStatus)) {
                 result = new StringBuilder("All orders: \n\n");
             } else {
@@ -177,7 +181,7 @@ public class SystemGUI {
             }
             boolean found = false;
 
-            //loop through orders and display those with matching status, or all orders
+            // loop through and show only the matching ones
             for (Order order : orders) {
                 if ("ALL".equals(selectedStatus) || selectedStatus.equals(order.getStatus())) {
                     result.append(order.toString()).append("\n");
@@ -205,10 +209,12 @@ public class SystemGUI {
 
         switch (action) {
             case DISPLAY:
+                // show order details
                 JOptionPane.showMessageDialog(parentFrame, info, "Order Details", JOptionPane.INFORMATION_MESSAGE);
                 break;
 
             case START:
+                // ask for confirmation before starting
                 int startConfirm = JOptionPane.showOptionDialog(
                         parentFrame,
                         info,
@@ -220,16 +226,13 @@ public class SystemGUI {
                         "Start Order"
                 );
                 if (startConfirm == JOptionPane.YES_OPTION) {
-                    try {
-                        driver.startOrder(order);
-                        JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been started.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (IllegalStateException ex) {
-                        JOptionPane.showMessageDialog(parentFrame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    driver.startOrder(order);
+                    JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been started.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
 
             case COMPLETE:
+                // ask for confirmation before completing
                 int completeConfirm = JOptionPane.showOptionDialog(
                         parentFrame,
                         info,
@@ -241,12 +244,8 @@ public class SystemGUI {
                         "Complete Order"
                 );
                 if (completeConfirm == JOptionPane.YES_OPTION) {
-                    try {
-                        driver.completeOrder(order);
-                        JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been completed.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                    } catch (IllegalStateException ex) {
-                        JOptionPane.showMessageDialog(parentFrame,  ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                    }
+                    driver.completeOrder(order);
+                    JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been completed.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
                 }
                 break;
         }
@@ -258,6 +257,7 @@ public class SystemGUI {
      * @param parentFrame the parent JFrame for the dialog
      */
     private void showFileChooser(JFrame parentFrame) {
+        // opens up a file picker for importing order jsons
         JFileChooser fileChooser = new JFileChooser("code/src/main/java/Resources");
         fileChooser.setDialogTitle("Select Order JSON File");
         int result = fileChooser.showOpenDialog(parentFrame);

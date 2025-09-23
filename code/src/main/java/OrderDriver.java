@@ -16,20 +16,22 @@ public class OrderDriver {
 
     public void addOrder(Order order) {
         orders.add(order);
-        incompleteOrders.add(order);
+        incompleteOrders.add(order); // this list maybe not necessary, gui searches by status in for loops
     }
 
     public void startOrder(Order order) {
+        // only start if it's incoming, otherwise do nothing
         if ("INCOMING".equals(order.getStatus())) {
             order.setStatus("IN PROGRESS");
         }
     }
 
     public void completeOrder(Order order) {
+        // only complete if it's in progress, otherwise do nothing
         if ("IN PROGRESS".equals(order.getStatus())) {
             order.setStatus("COMPLETED");
             incompleteOrders.remove(order);
-            completeOrders.add(order);
+            completeOrders.add(order); // maybe not necessary
         }
     }
 
