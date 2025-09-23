@@ -159,19 +159,19 @@ public class SystemGUI {
     private void showDisplayChoiceMenu(JFrame parentFrame) {
         // make a panel with 5 buttons stacked vertically
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 1, 10, 10)); // vertical layout, 6 rows now
+        panel.setLayout(new GridLayout(7, 1, 10, 10)); // vertical layout, 7 rows now
 
         // add label at the top
-        JLabel chooseLabel = new JLabel("Choose display option:");
+        JLabel chooseLabel = new JLabel("Choose display option");
         chooseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(chooseLabel);
 
         // create buttons
-        JButton allBtn = new JButton("All Orders");
         JButton individualBtn = new JButton("Individual Order");
         JButton incomingBtn = new JButton("Incoming Orders");
         JButton inProgressBtn = new JButton("In-Progress Orders");
         JButton completedBtn = new JButton("Completed Orders");
+        JButton allBtn = new JButton("All Orders");
 
         // add buttons to panel
         panel.add(allBtn);
