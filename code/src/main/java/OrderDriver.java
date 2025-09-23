@@ -16,7 +16,7 @@ public class OrderDriver {
         incomingOrder = null;
     }
 
-    public void startOrder(Order order) {
+    public void startOrder() {
 
     }
 
@@ -44,6 +44,7 @@ public class OrderDriver {
     public boolean addOrder(Order order) {
         if (!orders.contains(order)) {
             orders.add(order);
+            incompleteOrders.add(order);
             return true;
         }
         return false; //duplicate order
