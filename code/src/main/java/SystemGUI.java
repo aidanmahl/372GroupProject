@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * The Exit button closes the application.
  */
 public class SystemGUI {
-    private OrderDriver driver;
+    private final OrderDriver driver;
 
     /**
      *
@@ -33,6 +33,7 @@ public class SystemGUI {
     /**
      * Creates and displays the main GUI window with buttons for different actions.
      */
+    @SuppressWarnings("unused")
     private void createAndShowGUI() {
         // setting up the main window and buttons
         JFrame frame = new JFrame("ICS 372 Group Project - Order System");
@@ -103,7 +104,7 @@ public class SystemGUI {
         }
 
         String[] orderIDs = new String[filteredOrders.size()];
-        // showing order id and status so it's easier to pick an order based on user intebnt
+        // showing order id and status so it's easier to pick an order based on user intent
         for (int i = 0; i < filteredOrders.size(); i++) {
             orderIDs[i] = "Order #" + filteredOrders.get(i).getOrderID() + " - Status: " + filteredOrders.get(i).getStatus();
         }
@@ -169,7 +170,7 @@ public class SystemGUI {
                 statuses[0]
         );
 
-        //what group to display?
+        //group to display?
         if (selectedStatus != null) {
             java.util.List<Order> orders = driver.getOrders();
             StringBuilder result;
