@@ -3,14 +3,17 @@ package main.java;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * The SystemGUI class is responsible for creating and managing the graphical user interface (GUI)
  * for the order management system. It provides buttons for various actions such as starting,
  * completing, and displaying orders, as well as importing and exporting JSONs.
  * There are 5 main buttons on the GUI, each with their own action listeners to handle user interactions.
- * Start Order, Complete Order, and Display Order buttons will open a dropdown menu to select an order from the list of orders.
- * Choosing an order from this dropdown will then display the order information and ask for confirmation to start or complete the order if applicable.
+ * Start Order and Complete Order buttons will open a dropdown menu to select an order from the list of orders.
+ * Display Order(s) button will open a choice dialog.
+ * Choosing individual order will open a dropdown menu to select an order from the list of orders.
+ * Choosing group of orders will open a dropdown menu to select the status of orders to display.
  * The Add New Order JSON button opens a file chooser dialog to select a JSON file to import and send to Parser.
  * The Export All Orders to JSON button is a placeholder for future implementation.
  * The Exit button closes the application.
@@ -34,12 +37,12 @@ public class SystemGUI {
         JFrame frame = new JFrame("ICS 372 Group Project - Order System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(8, 1, 10, 10));
+        frame.setLayout(new GridLayout(7, 1, 10, 10));
 
         // Create buttons for each action
         JButton startOrderBtn = new JButton("Start Incoming Order");
         JButton completeOrderBtn = new JButton("Complete Order");
-        JButton displayOrderBtn = new JButton("Display Order");
+        JButton displayOrderBtn = new JButton("Display Order(s)");
         JButton addOrderBtn = new JButton("Add New Order JSON");
         JButton exportBtn = new JButton("Export All Orders to JSON");
         JButton exitBtn = new JButton("Exit");
@@ -47,8 +50,7 @@ public class SystemGUI {
         // Add action listeners to buttons
         startOrderBtn.addActionListener(e -> showOrderSelectionMenu(frame, MenuAction.START));
         completeOrderBtn.addActionListener(e -> showOrderSelectionMenu(frame, MenuAction.COMPLETE));
-        displayOrderBtn.addActionListener(e -> showOrderSelectionMenu(frame, MenuAction.DISPLAY));
-        //TODO exportBtn.addActionListener(e -> ()); //need to ask professor a question about this one
+        displayOrderBtn.addActionListener(e -> showDisplayChoiceMenu(frame));
         addOrderBtn.addActionListener(e -> showFileChooser(frame));
         exitBtn.addActionListener(e -> frame.dispose());
 
@@ -81,15 +83,28 @@ public class SystemGUI {
      */
     private void showOrderSelectionMenu(JFrame parentFrame, MenuAction action) {
         java.util.List<Order> orders = driver.getOrders();
-        if (orders.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "No orders available.");
+        java.util.List<Order> filteredOrders = new ArrayList<>();
+
+        // Filter orders based on the action
+        for (Order order : orders) {
+            if (action == MenuAction.START && "INCOMING".equals(order.getStatus())) {
+                filteredOrders.add(order);
+            } else if (action == MenuAction.COMPLETE && "IN PROGRESS".equals(order.getStatus())) {
+                filteredOrders.add(order);
+            } else if (action == MenuAction.DISPLAY) {
+                filteredOrders.add(order);
+            }
+        }
+
+        if (filteredOrders.isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "No orders available for this action.");
             return;
         }
 
-        String[] orderIDs = new String[orders.size()];
+        String[] orderIDs = new String[filteredOrders.size()];
         // Display order ID and status in dropdown
-        for (int i = 0; i < orders.size(); i++) {
-            orderIDs[i] = "Order #" + orders.get(i).getOrderID() + " - Status: " + orders.get(i).getStatus();
+        for (int i = 0; i < filteredOrders.size(); i++) {
+            orderIDs[i] = "Order #" + filteredOrders.get(i).getOrderID() + " - Status: " + filteredOrders.get(i).getStatus();
         }
 
         String selected = (String) JOptionPane.showInputDialog(
@@ -105,8 +120,76 @@ public class SystemGUI {
         //send selected order to appropriate action below
         if (selected != null) {
             int selectedIndex = java.util.Arrays.asList(orderIDs).indexOf(selected);
-            Order selectedOrder = orders.get(selectedIndex);
+            Order selectedOrder = filteredOrders.get(selectedIndex);
             handleOrderAction(parentFrame, selectedOrder, action);
+        }
+    }
+
+    /**
+     * Prompts user to choose between displaying an individual order or a group of orders by status.
+     * @param parentFrame the parent JFrame for the dialog
+     */
+    private void showDisplayChoiceMenu(JFrame parentFrame) {
+        Object[] options = {"Individual Order", "Multiple Orders"};
+        int choice = JOptionPane.showOptionDialog(
+                parentFrame,
+                "Display an individual order or a group?",
+                "Display Order",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+        if (choice == 0) {
+            showOrderSelectionMenu(parentFrame, MenuAction.DISPLAY);
+        } else if (choice == 1) {
+            showDisplayAllMenu(parentFrame);
+        }
+        // If dialog is closed or cancelled, do nothing
+    }
+
+    /**
+     * Displays a menu to choose which type of orders to display (INCOMING, IN PROGRESS, COMPLETED, ALL).
+     *
+     * @param parentFrame the parent JFrame for the dialog
+     */
+    private void showDisplayAllMenu(JFrame parentFrame) {
+        String[] statuses = {"ALL", "INCOMING", "IN PROGRESS", "COMPLETED"};
+        String selectedStatus = (String) JOptionPane.showInputDialog(
+                parentFrame,
+                "Select the type of orders to display:",
+                "Display All Orders",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                statuses,
+                statuses[0]
+        );
+
+        //what group to display?
+        if (selectedStatus != null) {
+            java.util.List<Order> orders = driver.getOrders();
+            StringBuilder result;
+            if ("ALL".equals(selectedStatus)) {
+                result = new StringBuilder("All orders: \n\n");
+            } else {
+                result = new StringBuilder("Orders with status: " + selectedStatus + "\n\n");
+            }
+            boolean found = false;
+
+            //loop through orders and display those with matching status, or all orders
+            for (Order order : orders) {
+                if ("ALL".equals(selectedStatus) || selectedStatus.equals(order.getStatus())) {
+                    result.append(order.toString()).append("\n");
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                result.append("No orders found.");
+            }
+
+            JOptionPane.showMessageDialog(parentFrame, result.toString(), "Order List", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -118,7 +201,6 @@ public class SystemGUI {
      * @param action      the action to perform (START, COMPLETE, or DISPLAY)
      */
     private void handleOrderAction(JFrame parentFrame, Order order, MenuAction action) {
-        //display selected order info. if start or complete is the action, there will be a confirmation message. Otherwise, if display, just show the info.
         String info = driver.displayOrder(order.getOrderID());
 
         switch (action) {
@@ -138,8 +220,12 @@ public class SystemGUI {
                         "Start Order"
                 );
                 if (startConfirm == JOptionPane.YES_OPTION) {
-                    driver.startOrder(order);
-                    JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been started.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        driver.startOrder(order);
+                        JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been started.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IllegalStateException ex) {
+                        JOptionPane.showMessageDialog(parentFrame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 break;
 
@@ -155,8 +241,12 @@ public class SystemGUI {
                         "Complete Order"
                 );
                 if (completeConfirm == JOptionPane.YES_OPTION) {
-                    driver.completeOrder(order);
-                    JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been completed.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        driver.completeOrder(order);
+                        JOptionPane.showMessageDialog(parentFrame, "Order #" + order.getOrderID() + " has been completed.", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IllegalStateException ex) {
+                        JOptionPane.showMessageDialog(parentFrame,  ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
                 break;
         }

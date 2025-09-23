@@ -20,13 +20,17 @@ public class OrderDriver {
     }
 
     public void startOrder(Order order) {
-        order.setStatus("IN PROGRESS"); // Corrected method name
+        if ("INCOMING".equals(order.getStatus())) {
+            order.setStatus("IN PROGRESS");
+        }
     }
 
     public void completeOrder(Order order) {
-        order.setStatus("COMPLETED"); // Corrected method name
-        incompleteOrders.remove(order);
-        completeOrders.add(order);
+        if ("IN PROGRESS".equals(order.getStatus())) {
+            order.setStatus("COMPLETED");
+            incompleteOrders.remove(order);
+            completeOrders.add(order);
+        }
     }
 
     public void completeAllOrders() {
