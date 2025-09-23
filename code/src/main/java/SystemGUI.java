@@ -71,7 +71,7 @@ public class SystemGUI {
         addOrderBtn.addActionListener(e -> showFileChooser(frame));
         exitBtn.addActionListener(e -> frame.dispose());
         exportBtn.addActionListener(e ->
-            JOptionPane.showMessageDialog(frame, "Export not yet implemented.", "Export", JOptionPane.INFORMATION_MESSAGE)
+                JOptionPane.showMessageDialog(frame, "Export not yet implemented.", "Export", JOptionPane.INFORMATION_MESSAGE)
         );
 
         // Add buttons to the frame
@@ -309,7 +309,7 @@ public class SystemGUI {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                Order importedOrder = Parser.parseJSONOrder(selectedFile, 1);
+                Order importedOrder = Parser.parseJSONOrder(selectedFile);
                 driver.addOrder(importedOrder);
                 JOptionPane.showMessageDialog(parentFrame, "JSON imported into Order #" + importedOrder.getOrderID());
             } catch (Exception ex) {
