@@ -36,18 +36,33 @@ public class SystemGUI {
     @SuppressWarnings("unused")
     private void createAndShowGUI() {
         // setting up the main window and buttons
-        JFrame frame = new JFrame("ICS 372 Group Project - Order System");
+        JFrame frame = new JFrame("FoodHub Order Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-        frame.setLayout(new GridLayout(7, 1, 10, 10));
+        frame.setSize(575, 450);
+        frame.setLayout(new GridLayout(6, 1, 10, 10));
 
         // Create buttons for each action
         JButton startOrderBtn = new JButton("Start Incoming Order");
-        JButton completeOrderBtn = new JButton("Complete Order");
+        JButton completeOrderBtn = new JButton("Complete In-Progress Order");
         JButton displayOrderBtn = new JButton("Display Order(s)");
-        JButton addOrderBtn = new JButton("Add New Order JSON");
+        JButton addOrderBtn = new JButton("Import Order JSON");
         JButton exportBtn = new JButton("Export All Orders to JSON");
         JButton exitBtn = new JButton("Exit");
+
+        // fancy button colors
+        displayOrderBtn.setBackground(new Color(200, 200, 200)); // Display - gray
+        displayOrderBtn.setForeground(Color.BLACK);
+        startOrderBtn.setBackground(new Color(76, 175, 80)); // Start - light green
+        startOrderBtn.setForeground(Color.WHITE);
+        completeOrderBtn.setBackground(new Color(27, 94, 32)); // Complete - dark green
+        completeOrderBtn.setForeground(Color.WHITE);
+        addOrderBtn.setBackground(new Color(33, 150, 243)); // Import - blue
+        addOrderBtn.setForeground(Color.WHITE);
+        exportBtn.setBackground(new Color(13, 71, 161)); //Export - dark blue
+        exportBtn.setForeground(Color.WHITE);
+        exitBtn.setBackground(new Color(211, 47, 47)); // Exit - red
+        exitBtn.setForeground(Color.WHITE);
+        exitBtn.setPreferredSize(new Dimension(80, 30));
 
         // Add action listeners to buttons
         startOrderBtn.addActionListener(e -> showOrderSelectionMenu(frame, MenuAction.START));
@@ -55,28 +70,35 @@ public class SystemGUI {
         displayOrderBtn.addActionListener(e -> showDisplayChoiceMenu(frame));
         addOrderBtn.addActionListener(e -> showFileChooser(frame));
         exitBtn.addActionListener(e -> frame.dispose());
+        exportBtn.addActionListener(e ->
+            JOptionPane.showMessageDialog(frame, "Export not yet implemented.", "Export", JOptionPane.INFORMATION_MESSAGE)
+        );
 
         // Add buttons to the frame
-        frame.add(new JLabel("Select an option:", SwingConstants.CENTER));
-        frame.add(startOrderBtn);
         frame.add(displayOrderBtn);
+        frame.add(startOrderBtn);
         frame.add(completeOrderBtn);
         frame.add(addOrderBtn);
         frame.add(exportBtn);
-        frame.add(exitBtn);
+        // put exit button in its own panel so we can make it smaller
+        JPanel exitPanel = new JPanel();
+        exitPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        exitPanel.add(exitBtn);
+        frame.add(exitPanel);
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
     /**
-     * Enum representing the different menu actions that can be performed on an order.
+     * Enum representing the different menu actions that can be performed on an order for use with the dropdown menu.
      */
     private enum MenuAction {
         DISPLAY, START, COMPLETE
     }
 
     /**
+     * Appears when Start Order or Complete Order button is clicked, or if Individual Order is selected from the Display Order(s) menu.
      * Displays a dropdown menu for selecting an order and performs the specified action on the selected order.
      * Dropdown menu appears if Display, Start, or Complete Order is selected from the main menu.
      * YET TO BE TESTED UNTIL PARSER IS COMPLETE
@@ -128,74 +150,96 @@ public class SystemGUI {
     }
 
     /**
+     * Appears when Display Order(s) button is clicked.
      * Prompts user to choose between displaying an individual order or a group of orders by status.
+     * Sows 5 buttons: Individual Order, Incoming Orders, In-Progress Orders, Completed Orders, or All Orders.
      * @param parentFrame the parent JFrame for the dialog
      */
+    @SuppressWarnings("unused")
     private void showDisplayChoiceMenu(JFrame parentFrame) {
-        Object[] options = {"Individual Order", "Multiple Orders"};
-        // two buttons
-        int choice = JOptionPane.showOptionDialog(
-                parentFrame,
-                "Display an individual order or a group?",
-                "Display Order",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]
-        );
-        if (choice == 0) {
-            showOrderSelectionMenu(parentFrame, MenuAction.DISPLAY);
-        } else if (choice == 1) {
-            showDisplayAllMenu(parentFrame);
-        }
-        // if they close the dialog, do nothing
+        // make a panel with 5 buttons stacked vertically
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 1, 10, 10)); // vertical layout, 6 rows now
+
+        // add label at the top
+        JLabel chooseLabel = new JLabel("Choose display option:");
+        chooseLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(chooseLabel);
+
+        // create buttons
+        JButton allBtn = new JButton("All Orders");
+        JButton individualBtn = new JButton("Individual Order");
+        JButton incomingBtn = new JButton("Incoming Orders");
+        JButton inProgressBtn = new JButton("In-Progress Orders");
+        JButton completedBtn = new JButton("Completed Orders");
+
+        // add buttons to panel
+        panel.add(allBtn);
+        panel.add(individualBtn);
+        panel.add(incomingBtn);
+        panel.add(inProgressBtn);
+        panel.add(completedBtn);
+
+        JDialog dialog = new JDialog(parentFrame, "Display Order(s)", true);
+        dialog.getContentPane().add(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(parentFrame);
+
+        // button actions, open dropdown menu for individual order, or filter and display by status
+        individualBtn.addActionListener(e -> {
+            dialog.dispose();
+            showOrderSelectionMenu(parentFrame, MenuAction.DISPLAY); });
+        incomingBtn.addActionListener(e -> {
+            dialog.dispose();
+            displayOrdersByStatus(parentFrame, "INCOMING"); });
+        inProgressBtn.addActionListener(e -> {
+            dialog.dispose();
+            displayOrdersByStatus(parentFrame, "IN PROGRESS"); });
+        completedBtn.addActionListener(e -> {
+            dialog.dispose();
+            displayOrdersByStatus(parentFrame, "COMPLETED"); });
+        allBtn.addActionListener(e -> {
+            dialog.dispose();
+            displayOrdersByStatus(parentFrame, "ALL"); });
+
+        dialog.setVisible(true);
     }
 
     /**
-     * Displays a menu to choose which type of orders to display (INCOMING, IN PROGRESS, COMPLETED, ALL).
-     *
+     * Appears when user selects a status or ALL from the Display Order(s) menu above.
+     * Displays orders filtered by the given status, or all orders if status is "ALL".
      * @param parentFrame the parent JFrame for the dialog
+     * @param status the status to filter by ("ALL", "INCOMING", "IN PROGRESS", "COMPLETED")
      */
-    private void showDisplayAllMenu(JFrame parentFrame) {
-        String[] statuses = {"ALL", "INCOMING", "IN PROGRESS", "COMPLETED"};
-        // let the user pick which group to show
-        String selectedStatus = (String) JOptionPane.showInputDialog(
-                parentFrame,
-                "Select the type of orders to display:",
-                "Display All Orders",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                statuses,
-                statuses[0]
-        );
-
-        //group to display?
-        if (selectedStatus != null) {
-            java.util.List<Order> orders = driver.getOrders();
-            StringBuilder result;
-            // edit the header based on choice
-            if ("ALL".equals(selectedStatus)) {
-                result = new StringBuilder("All orders: \n\n");
-            } else {
-                result = new StringBuilder("Orders with status: " + selectedStatus + "\n\n");
-            }
-            boolean found = false;
-
-            // loop through and show only the matching ones
-            for (Order order : orders) {
-                if ("ALL".equals(selectedStatus) || selectedStatus.equals(order.getStatus())) {
-                    result.append(order.toString()).append("\n");
-                    found = true;
-                }
-            }
-
-            if (!found) {
-                result.append("No orders found.");
-            }
-
-            JOptionPane.showMessageDialog(parentFrame, result.toString(), "Order List", JOptionPane.INFORMATION_MESSAGE);
+    private void displayOrdersByStatus(JFrame parentFrame, String status) {
+        java.util.List<Order> orders = driver.getOrders();
+        StringBuilder result;
+        if ("ALL".equals(status)) {
+            result = new StringBuilder("All orders: \n\n");
+        } else {
+            result = new StringBuilder("Orders with status: " + status + "\n\n");
         }
+        boolean found = false;
+        for (Order order : orders) {
+            if ("ALL".equals(status) || status.equals(order.getStatus())) {
+                result.append(order.toString()).append("\n");
+                found = true;
+            }
+        }
+        if (!found) {
+            result.append("No orders found.");
+        }
+
+        // create a scrollable text area for long lists
+        JTextArea textArea = new JTextArea(result.toString());
+        textArea.setEditable(false);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setPreferredSize(new Dimension(500, 400)); // set max size
+
+        JOptionPane.showMessageDialog(parentFrame, scrollPane, "Order List", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -253,20 +297,21 @@ public class SystemGUI {
     }
 
     /**
+     * Appears when the Import Order JSON button is clicked.
      * Displays a file chooser dialog for selecting a JSON file to import orders.
      * Defaults to the Resources directory, but you may browse to find a JSON elsewhere in your computer.
      * @param parentFrame the parent JFrame for the dialog
      */
     private void showFileChooser(JFrame parentFrame) {
-        // opens up a file picker for importing order jsons
         JFileChooser fileChooser = new JFileChooser("code/src/main/java/Resources");
         fileChooser.setDialogTitle("Select Order JSON File");
         int result = fileChooser.showOpenDialog(parentFrame);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
-                driver.addOrder(Parser.parseJSONOrder(selectedFile, 1));
-                JOptionPane.showMessageDialog(parentFrame, "Order successfully parsed and placed into an Order.");
+                Order importedOrder = Parser.parseJSONOrder(selectedFile, 1);
+                driver.addOrder(importedOrder);
+                JOptionPane.showMessageDialog(parentFrame, "JSON imported into Order #" + importedOrder.getOrderID());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(parentFrame, "Failed to parse and add the order.", "Error", JOptionPane.ERROR_MESSAGE);
             }
