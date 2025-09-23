@@ -17,7 +17,7 @@ public class Order {
     // Empty constructor
     public Order() {
         this.foodList = new ArrayList<>();
-        this.status = "incoming";
+        this.status = "INCOMING";
     }
 
     // Constructor
@@ -30,7 +30,7 @@ public class Order {
         } else {
             this.foodList = new ArrayList<>();
         }
-        this.status = "incoming";
+        this.status = "INCOMING";
         this.totalPrice = sumPrice();
     }
 
