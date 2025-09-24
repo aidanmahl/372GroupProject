@@ -157,44 +157,34 @@ public class SystemGUI {
      */
     @SuppressWarnings("unused")
     private void showDisplayChoiceMenu(JFrame parentFrame) {
-        // make a panel with 5 buttons stacked vertically
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1, 10, 10)); // vertical layout, 7 rows now
+        panel.setLayout(new GridLayout(6, 1, 10, 10));
 
-        // add label at the top
         JLabel chooseLabel = new JLabel("Choose display option");
         chooseLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(chooseLabel);
 
-        // create buttons
         JButton individualBtn = new JButton("Individual Order");
-        JButton incomingBtn = new JButton("Incoming Orders");
-        JButton inProgressBtn = new JButton("In-Progress Orders");
+        JButton uncompletedBtn = new JButton("Uncompleted Orders");
         JButton completedBtn = new JButton("Completed Orders");
         JButton allBtn = new JButton("All Orders");
 
-        // add buttons to panel
-        panel.add(allBtn);
         panel.add(individualBtn);
-        panel.add(incomingBtn);
-        panel.add(inProgressBtn);
+        panel.add(uncompletedBtn);
         panel.add(completedBtn);
+        panel.add(allBtn);
 
         JDialog dialog = new JDialog(parentFrame, "Display Order(s)", true);
         dialog.getContentPane().add(panel);
         dialog.pack();
         dialog.setLocationRelativeTo(parentFrame);
 
-        // button actions, open dropdown menu for individual order, or filter and display by status
         individualBtn.addActionListener(e -> {
             dialog.dispose();
             showOrderSelectionMenu(parentFrame, MenuAction.DISPLAY); });
-        incomingBtn.addActionListener(e -> {
+        uncompletedBtn.addActionListener(e -> {
             dialog.dispose();
-            displayOrdersByStatus(parentFrame, "INCOMING"); });
-        inProgressBtn.addActionListener(e -> {
-            dialog.dispose();
-            displayOrdersByStatus(parentFrame, "IN PROGRESS"); });
+            displayOrdersByStatus(parentFrame, "UNCOMPLETED"); });
         completedBtn.addActionListener(e -> {
             dialog.dispose();
             displayOrdersByStatus(parentFrame, "COMPLETED"); });
@@ -206,22 +196,39 @@ public class SystemGUI {
     }
 
     /**
-     * Appears when user selects a status or ALL from the Display Order(s) menu above.
      * Displays orders filtered by the given status, or all orders if status is "ALL".
+     * Supports "UNCOMPLETED" to show both "INCOMING" and "IN PROGRESS".
      * @param parentFrame the parent JFrame for the dialog
-     * @param status the status to filter by ("ALL", "INCOMING", "IN PROGRESS", "COMPLETED")
+     * @param status the status to filter by ("ALL", "UNCOMPLETED", "COMPLETED")
      */
     private void displayOrdersByStatus(JFrame parentFrame, String status) {
         java.util.List<Order> orders = driver.getOrders();
+        orders = new ArrayList<>(orders);
+        orders.sort((o1, o2) -> Long.compare(o1.getDate(), o2.getDate()));
+
         StringBuilder result;
+        double totalUncompleted = 0.0;
         if ("ALL".equals(status)) {
-            result = new StringBuilder("All orders: \n\n");
+            result = new StringBuilder("All orders \n");
+        } else if ("UNCOMPLETED".equals(status)) {
+            result = new StringBuilder("Uncompleted orders \n");
         } else {
-            result = new StringBuilder("Orders with status: " + status + "\n\n");
+            result = new StringBuilder("Completed orders \n");
         }
+        result.append("Sorted by time (oldest to newest):\n");
+
         boolean found = false;
         for (Order order : orders) {
-            if ("ALL".equals(status) || status.equals(order.getStatus())) {
+            // check if the order matches the requested status
+            boolean isUncompleted = "INCOMING".equals(order.getStatus()) || "IN PROGRESS".equals(order.getStatus());
+            if ("ALL".equals(status)) {
+                result.append(order.toString()).append("\n");
+                found = true;
+            } else if ("UNCOMPLETED".equals(status) && isUncompleted) { // both incoming and in progress
+                totalUncompleted += order.getTotalPrice(); // sum up total price of uncompleted orders
+                result.append(order.toString()).append("\n");
+                found = true;
+            } else if ("COMPLETED".equals(status) && "COMPLETED".equals(order.getStatus())) {
                 result.append(order.toString()).append("\n");
                 found = true;
             }
@@ -230,16 +237,25 @@ public class SystemGUI {
             result.append("No orders found.");
         }
 
-        // create a scrollable text area for long lists
         JTextArea textArea = new JTextArea(result.toString());
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(500, 400)); // set max size
+        scrollPane.setPreferredSize(new Dimension(500, 400));
 
-        JOptionPane.showMessageDialog(parentFrame, scrollPane, "Order List", JOptionPane.INFORMATION_MESSAGE);
+        // if showing uncompleted orders, also show total price at the top
+        if ("UNCOMPLETED".equals(status)) {
+            JPanel panel = new JPanel(new BorderLayout());
+            JLabel totalLabel = new JLabel(String.format("Total price of uncompleted orders: $%.2f", totalUncompleted));
+            totalLabel.setFont(new Font("Arial", Font.BOLD, 14));
+            panel.add(totalLabel, BorderLayout.NORTH);
+            panel.add(scrollPane, BorderLayout.CENTER);
+            JOptionPane.showMessageDialog(parentFrame, panel, "Order List", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(parentFrame, scrollPane, "Order List", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
