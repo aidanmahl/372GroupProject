@@ -1,0 +1,88 @@
+package main.gui;
+
+import main.java.OrderDriver;
+
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * The SystemGUI class is responsible for creating and managing the graphical user interface (GUI)
+ * for the order management system. It provides buttons for various actions such as starting,
+ * completing, and displaying orders, as well as importing and exporting JSONs.
+ * There are 5 main buttons on the GUI:
+ * Start Order and Complete Order buttons will open a dropdown menu to select an order from the list of orders.
+ * Display Order(s) button will open a choice dialog--
+ *     Choosing individual order will open a dropdown menu to select an order from the list of orders.
+ *     Choosing a group of orders will display all orders grouped by that status.
+ * The Add New Order JSON button opens a file chooser dialog to select a JSON file to import and send to Parser.
+ * The Export All Orders to JSON button is a placeholder for future implementation.
+ * The Exit button closes the application.
+ */
+public class SystemGUI {
+    private final OrderDriver driver;
+
+    public SystemGUI(OrderDriver driver) {
+        this.driver = driver;
+        createAndShowGUI();
+    }
+
+    /**
+     * Creates and displays the main GUI window with buttons for different actions.
+     */
+    @SuppressWarnings("unused")
+    private void createAndShowGUI() {
+        // setting up the main window and buttons
+        JFrame frame = new JFrame("FoodHub Order Management System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(575, 450);
+        frame.setLayout(new GridLayout(6, 1, 10, 10));
+
+        // Create buttons for each action
+        JButton startOrderBtn = new JButton("Start Incoming Order");
+        JButton completeOrderBtn = new JButton("Complete In-Progress Order");
+        JButton displayOrderBtn = new JButton("Display Order(s)");
+        JButton addOrderBtn = new JButton("Import Order JSON");
+        JButton exportBtn = new JButton("Export All Orders to JSON");
+        JButton exitBtn = new JButton("Exit");
+
+        // fancy button colors
+        displayOrderBtn.setBackground(new Color(200, 200, 200)); // Display - gray
+        displayOrderBtn.setForeground(Color.BLACK);
+        startOrderBtn.setBackground(new Color(76, 175, 80)); // Start - light green
+        startOrderBtn.setForeground(Color.WHITE);
+        completeOrderBtn.setBackground(new Color(27, 94, 32)); // Complete - dark green
+        completeOrderBtn.setForeground(Color.WHITE);
+        addOrderBtn.setBackground(new Color(33, 150, 243)); // Import - blue
+        addOrderBtn.setForeground(Color.WHITE);
+        exportBtn.setBackground(new Color(13, 71, 161)); //Export - dark blue
+        exportBtn.setForeground(Color.WHITE);
+        exitBtn.setBackground(new Color(211, 47, 47)); // Exit - red
+        exitBtn.setForeground(Color.WHITE);
+        exitBtn.setPreferredSize(new Dimension(80, 30));
+
+        // Add action listeners to buttons
+        startOrderBtn.addActionListener(e -> new OrderSelectionDropdown(frame, driver, OrderSelectionDropdown.Action.START)); // opens dropdown with START action
+        completeOrderBtn.addActionListener(e -> new OrderSelectionDropdown(frame, driver, OrderSelectionDropdown.Action.COMPLETE)); // opens dropdown with COMPLETE action
+        displayOrderBtn.addActionListener(e -> new DisplayOrdersDialog(frame, driver));
+        addOrderBtn.addActionListener(e -> ShowFileChooser.importOrder(frame, driver)); // opens file chooser and imports JSON to Parser
+        exportBtn.addActionListener(e ->
+                JOptionPane.showMessageDialog(frame, "Export not yet implemented.", "Export", JOptionPane.INFORMATION_MESSAGE)
+        );
+        exitBtn.addActionListener(e -> frame.dispose());
+
+        // Add buttons to the frame
+        frame.add(displayOrderBtn);
+        frame.add(startOrderBtn);
+        frame.add(completeOrderBtn);
+        frame.add(addOrderBtn);
+        frame.add(exportBtn);
+        // put exit button in its own panel so we can make it smaller
+        JPanel exitPanel = new JPanel();
+        exitPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        exitPanel.add(exitBtn);
+        frame.add(exitPanel);
+
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+}
