@@ -1,0 +1,72 @@
+@startuml
+'https://plantuml.com/class-diagram
+class Parser
+class FoodItem
+class Order
+class OrderDriver
+/'
+9-19-2025 -Joseph
+I don't think we need to be documenting java util classes in here.
+We should only be documenting classes built in this package.
+If we need to describe a relationship our classes have, that belongs in that classes description no?
+'/
+interface List
+interface Collection
+interface JSONsimple
+
+
+JSONsimple <|-- Parser
+Collection <|-- Order
+Order -- Parser
+FoodItem <- Order
+Parser -- OrderDriver
+
+
+/'
+Class descriptions
+'/
+class FoodItem {
+- name : String
+- quantity : int
+- price : float
+
++ FoodItem(name : String, quantity : int, price : double)
+}
+
+class Order {
+- OrderID : int
+- Date : long
+- totalPrice : double
+- type : String
+- status : String
+- foodList : ArrayList<FoodItem>
+
++ Order(OrderID : int, type : String, date : long, foodList : List<FoodItem>)
++ sumPrice() : double
++ addFoodItem(f : FoodItem) : boolean
++ setStatus(newStatus : String) : void
++ toString() : String
+}
+
+class Parser {
++ parseJSONOrder(file : File) : Order
++ exportOrder() : void
+}
+
+class OrderDriver {
+- orders : List<Order>
+- incompleteOrders : List<Order>
+- completeOrder : List<Order>
+- incomingOrder : Order
+
++ OrderDriver()
++ addOrder(order : Order) : void
++ startOrder(order : Order) : void
++ completeOrder(order : Order) : void
++ completAllOrders() : void
++ displayOrder(orderID : int) : String
++ exportOrdersToJSON(String filename) : boolean
+}
+
+
+@enduml
