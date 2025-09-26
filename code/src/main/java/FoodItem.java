@@ -52,7 +52,7 @@ public class FoodItem {
     public String toString() {
         return name +
                 "\n" + "quantity: " + quantity +
-                "\n" + "price: $" +  price +
+                "\n" + String.format("price: $%.2f", price) +
                 "\n";
     }
 }
