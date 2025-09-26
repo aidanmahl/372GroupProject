@@ -1,5 +1,13 @@
 package main.java;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+import java.io.FileWriter;
+
+
+import java.io.FileWriter;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -51,6 +59,37 @@ public class OrderDriver {
     }
 
     public boolean exportOrdersToJSON(String filename) {
+
+
+        //We may need an identifier for the day or time of the export - Rocky Xiong
+
+        JSONArray ordersArray = new JSONArray();
+        for (Order order : completeOrders) {
+            JSONObject ordersJSON = new JSONObject();
+            ordersJSON.put("orderID", order.getOrderID());
+            ordersJSON.put("date", order.getDate());
+            ordersJSON.put("type", order.getType());
+            ordersJSON.put("completeTime", System.currentTimeMillis());
+
+            JSONArray orderFoodsList = new JSONArray();
+            for (FoodItem food : order.getFoodList()){
+                JSONObject foodJSON = new JSONObject();
+                foodJSON.put("name", food.getName());
+                foodJSON.put("quantity", food.getQuantity());
+                foodJSON.put("price", food.getPrice());
+                orderFoodsList.add(foodJSON);
+            }
+
+            ordersArray.add(ordersJSON);
+        }
+
+        try(FileWriter fw = new FileWriter(filename)) {
+            fw.write(ordersArray.toJSONString());
+            fw.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         return false; //to be implemented
     }
 
