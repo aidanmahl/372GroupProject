@@ -129,7 +129,7 @@ public class Order {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for(FoodItem foodItem: foodList){
-            s.append("\n    "+ foodItem.getQuantity() +"x " + foodItem.getName() + " - $" + foodItem.getPrice());
+            s.append(foodItem.toString() + "\n");
         }
         return  "-----------\n"+
                 "Order ID: " + orderId + "\n" +

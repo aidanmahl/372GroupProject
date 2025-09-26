@@ -48,4 +48,11 @@ public class FoodItem {
 		this.price = price;
 	}
 
+    @Override
+    public String toString() {
+        return name +
+                "\n" + "quantity: " + quantity +
+                "\n" + "price: $" +  price +
+                "\n";
+    }
 }
