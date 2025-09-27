@@ -1,7 +1,6 @@
 package main.gui;
 
 import main.java.OrderDriver;
-import main.java.Parser;
 
 import javax.swing.*;
 
@@ -12,7 +11,7 @@ import javax.swing.*;
 public class ExportJSON {
     public static void exportOrders(JFrame parentFrame, OrderDriver orderDriver) {
         String fileName = "Orders_" + System.currentTimeMillis() + ".json";
-        boolean exportSuccess = Parser.exportOrdersToJSON(fileName,  orderDriver);
+        boolean exportSuccess = OrderDriver.exportOrdersToJSON(fileName,  orderDriver);
 
         if (exportSuccess) {
             JOptionPane.showMessageDialog(parentFrame, "Exported Orders to JSON");
