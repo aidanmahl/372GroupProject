@@ -55,11 +55,6 @@ class Order {
 + addFoodItem(f : FoodItem) : boolean
 + setStatus(newStatus : String) : void
 + toString() : String
-' Testing
-'+ Order(orderID : int, type : String, date : long, foodList : List<FoodItem>)
-'+ sumPrice () : double
-'+ addFoodItem(f : FoodItem) : boolean
-'+ toString () : String
 }
 
 class Parser {
