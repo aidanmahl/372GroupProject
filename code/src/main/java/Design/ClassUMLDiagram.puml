@@ -87,6 +87,7 @@ class OrderDriver {
 }
 
 class SystemGUI {
+- driver : OrderDriver
 + SystemGUI (driver : OrderDriver)
 - createAndShowGUI() : void
 }
@@ -96,4 +97,8 @@ class ShowFileChooser {
 + static importOrder(parentFrame : JFrame, driver : OrderDriver) : void
 }
 
+class DisplayOrdersDialog{
++ DisplayOrdersDialog(parentFrame : JFrame, driver : OrderDriver)
+- showOrders(parentFrame : JFrame, driver : OrderDriver, status : String) : void
+}
 @enduml
