@@ -58,18 +58,18 @@ public class OrderDriver {
         return "Order not found.";
     }
 
-    public boolean exportOrdersToJSON(String filename) {
-
+    public static boolean exportOrdersToJSON(String filename, OrderDriver orderDriver) {
+        boolean exportSuccess;
 
         //We may need an identifier for the day or time of the export - Rocky Xiong
 
         JSONArray ordersArray = new JSONArray();
-        for (Order order : completeOrders) {
+        for (Order order : orderDriver.getCompleteOrders()) {
             JSONObject ordersJSON = new JSONObject();
             ordersJSON.put("orderID", order.getOrderID());
             ordersJSON.put("date", order.getDate());
             ordersJSON.put("type", order.getType());
-            ordersJSON.put("completeTime", System.currentTimeMillis());
+            ordersJSON.put("completeTime", System.currentTimeMillis()); //should we add a complete time attribute to orders? - Rocky
 
             JSONArray orderFoodsList = new JSONArray();
             for (FoodItem food : order.getFoodList()){
@@ -86,11 +86,12 @@ public class OrderDriver {
         try(FileWriter fw = new FileWriter(filename)) {
             fw.write(ordersArray.toJSONString());
             fw.flush();
+            exportSuccess = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return false; //to be implemented
+        return exportSuccess; //to be implemented
     }
 
     public List<Order> getOrders() {
