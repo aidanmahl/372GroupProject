@@ -63,15 +63,19 @@ class Parser {
 
 class OrderDriver {
 - orders : List<Order>
-- impcompleteOrders : List<Order>
+- incompleteOrders : List<Order>
 - completeOrders : List<Order>
 
-+ addOrder (order : Order) : void
-+ startOrder (order : Order) : void
-+ completeOrder (order : Order) : void
-+ completeAllOrders () : void
-+ displayOrder (orderID : int) : String
-+ exportOrdersToJSON (fileName : String, orderDriver : OrderDriver)
++ OrderDriver()
++ addOrder(order : Order) : void
++ startOrder(order : Order) : void
++ completeOrder(order : Order) : void
++ completeAllOrders() : void
++ displayOrder(orderID : int) : String
++ getOrders() : List<Order>
++ getIncompleteOrders() : List<Order>
++ getCompleteOrders() : List<Order>
++ static exportOrdersToJSON(fileName : String, orderDriver : OrderDriver) : boolean
 }
 
 class SystemGUI {
