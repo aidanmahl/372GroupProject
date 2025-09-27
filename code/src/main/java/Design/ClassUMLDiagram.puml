@@ -30,9 +30,17 @@ SystemGUI -- OrderSelectionDropdown
 class FoodItem {
 - name : String
 - quantity : int
-- price : float
+- price : double
 
-+ FoodItem (name : String, quantity : int, price : double)
++ FoodItem()
++ FoodItem(name : String, quantity : int, price : double)
++ getName() : String
++ setName(name : String) : void
++ getQuantity() : int
++ setQuantity(quantity : int) : void
++ getPrice() : double
++ setPrice(price : double) : void
++ toString() : String
 }
 
 class Order {
