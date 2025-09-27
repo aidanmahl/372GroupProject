@@ -20,12 +20,7 @@ Order -- Parser
 FoodItem <- Order
 Parser -- OrderDriver
 
-
 OrderDriver <-- SystemGUI
-OrderDriver -- ShowFileChooser
-OrderDriver -- DisplayOrdersDialog
-Parser -- ExportJSON
-OrderDriver -- OrderSelectionDropdown
 
 SystemGUI -- ShowFileChooser
 SystemGUI -- DisplayOrdersDialog
@@ -68,7 +63,6 @@ class Order {
 
 class Parser {
 + parseJSONOrder(file : File) : Order
-+ exportOrdersToJSON (fileName : String, orderDriver : OrderDriver)
 }
 
 class OrderDriver {
@@ -81,7 +75,16 @@ class OrderDriver {
 + completeOrder (order : Order) : void
 + completeAllOrders () : void
 + displayOrder (orderID : int) : String
++ exportOrdersToJSON (fileName : String, orderDriver : OrderDriver)
 }
 
+class SystemGUI {
++ SystemGUI (driver : OrderDriver)
+- createAndShowGUI() : void
+}
+
+class ShowFileChooser {
+
+}
 
 @enduml
