@@ -5,6 +5,10 @@ import main.java.Parser;
 
 import javax.swing.*;
 
+/**
+ * The ExportJSON method will call on the Parser class to export the JSON
+ * then outputs a message if the export was successful or not
+ */
 public class ExportJSON {
     public static void exportOrders(JFrame parentFrame, OrderDriver orderDriver) {
         String fileName = "Orders_" + System.currentTimeMillis() + ".json";
