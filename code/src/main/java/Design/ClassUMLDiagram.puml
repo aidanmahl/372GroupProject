@@ -1,31 +1,31 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Parser
-class FoodItem
-class Order
-class OrderDriver
+'class Parser
+'class FoodItem
+'class Order
+'class OrderDriver
+'
+'class SystemGUI
+'class ShowFileChooser
+'class DisplayOrdersDialog
+'class ExportJSON
+'class OrderSelectionDropdown
 
-class SystemGUI
-class ShowFileChooser
-class DisplayOrdersDialog
-class ExportJSON
-class OrderSelectionDropdown
-
-interface JSONsimple
-
-
-JSONsimple <|- Parser
-Order -- Parser
-FoodItem <- Order
-Parser -- OrderDriver
-
-OrderDriver <-- SystemGUI
-
-SystemGUI -- ShowFileChooser
-SystemGUI -- DisplayOrdersDialog
-SystemGUI -- ExportJSON
-SystemGUI -- OrderSelectionDropdown
+'interface JSONsimple
+'
+'
+'JSONsimple <|- Parser
+'Order -- Parser
+'FoodItem <- Order
+'Parser -- OrderDriver
+'
+'OrderDriver <-- SystemGUI
+'
+'SystemGUI -- ShowFileChooser
+'SystemGUI -- DisplayOrdersDialog
+'SystemGUI -- ExportJSON
+'SystemGUI -- OrderSelectionDropdown
 
 class FoodItem {
 - name : String
@@ -111,4 +111,6 @@ class OrderSelectionDropdown{
 - handleOrderAction(parentFrame : JFrame, driver : OrderDriver, order : Order, action : Action) : void
 + enum Action {DISPLAY, START, COMPLETE}
 }
+
+' Relationships
 @enduml
