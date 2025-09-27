@@ -59,8 +59,6 @@ public class OrderDriver {
     public static boolean exportOrdersToJSON(String filename, OrderDriver orderDriver) {
         boolean exportSuccess;
 
-        //We may need an identifier for the day or time of the export - Rocky Xiong
-
         JSONArray ordersArray = new JSONArray();
         for (Order order : orderDriver.getCompleteOrders()) {
             JSONObject ordersJSON = new JSONObject();
