@@ -50,9 +50,6 @@ public class FoodItem {
 
     @Override
     public String toString() {
-        return name +
-                "\n" + "quantity: " + quantity +
-                "\n" + String.format("price: $%.2f", price) +
-                "\n";
+        return "\n  " + quantity + "x " + name + " at " + String.format(" $%.2f", price) + " each";
     }
 }
