@@ -3,10 +3,8 @@ package main.java;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.FileWriter;
-
-
 import java.io.FileWriter;
 import java.util.List;
 import java.util.ArrayList;
@@ -83,7 +81,23 @@ public class OrderDriver {
             ordersArray.add(ordersJSON);
         }
 
-        try(FileWriter fw = new FileWriter(filename)) {
+        //The literal file path
+        String fileDirectory = "code/src/main/java/Export";
+        String filePath = fileDirectory + "/" + filename;
+
+        //checks if directory exists and if it successfully created the directory
+        File fileDir = new File(fileDirectory);
+        if (!fileDir.exists()) {
+            boolean created = fileDir.mkdir();
+            if (!created) {
+                System.out.println("Error creating directory: " + fileDirectory);
+            } else {
+                System.out.println("Directory created: " + fileDirectory);
+            }
+        }
+
+        //write ordersArray to a file
+        try(FileWriter fw = new FileWriter(filePath)) {
             fw.write(ordersArray.toJSONString());
             fw.flush();
             exportSuccess = true;
@@ -94,6 +108,7 @@ public class OrderDriver {
         return exportSuccess; //to be implemented
     }
 
+    //getters
     public List<Order> getOrders() {
         return orders;
     }
