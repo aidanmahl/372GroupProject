@@ -101,4 +101,14 @@ class DisplayOrdersDialog{
 + DisplayOrdersDialog(parentFrame : JFrame, driver : OrderDriver)
 - showOrders(parentFrame : JFrame, driver : OrderDriver, status : String) : void
 }
+
+class ExportJSON{
++ static exportOrders(parentFrame : JFrame, orderDriver : OrderDriver) : void
+}
+
+class OrderSelectionDropdown{
++ OrderSelectionDropdown(parentFrame : JFrame, driver : OrderDriver, action : Action)
+- handleOrderAction(parentFrame : JFrame, driver : OrderDriver, order : Order, action : Action) : void
++ enum Action {DISPLAY, START, COMPLETE}
+}
 @enduml
