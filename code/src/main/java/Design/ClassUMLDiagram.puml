@@ -1,92 +1,74 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
 class Parser
 class FoodItem
 class Order
 class OrderDriver
-/'
-9-19-2025 -Joseph
-I don't think we need to be documenting java util classes in here.
-We should only be documenting classes built in this package.
-If we need to describe a relationship our classes have, that belongs in that classes description no?
-'/
-interface List
-interface Collection
+
+class SystemGUI
+class ShowFileChooser
+class DisplayOrdersDialog
+class ExportJSON
+class OrderSelectionDropdown
+
 interface JSONsimple
 
 
-JSONsimple <|-- Parser
-Collection <|-- Order
+JSONsimple <|- Parser
 Order -- Parser
-FoodItem - Order
+FoodItem <- Order
 Parser -- OrderDriver
 
-class ArrayList {
-Object[] elementData
-size()
-}
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
+OrderDriver <-- SystemGUI
+OrderDriver -- ShowFileChooser
+OrderDriver -- DisplayOrdersDialog
+Parser -- ExportJSON
+OrderDriver -- OrderSelectionDropdown
 
-class AbstractCollection {
-int something
-something()
-}
+SystemGUI -- ShowFileChooser
+SystemGUI -- DisplayOrdersDialog
+SystemGUI -- ExportJSON
+SystemGUI -- OrderSelectionDropdown
 
 class FoodItem {
 - name : String
 - quantity : int
 - price : float
-+ setName(String name) : void
-+ setQuantity(int quantity) : void
-+ setPrice(float price) : void
-+ getName() : String
-+ getQuantity() : Integer
-+ getPrice() : float
+
++ FoodItem (name : String, quantity : int, price : double)
 }
 
 class Order {
-- status : String
+- orderID : int
+- date : long
+- totalPrice : double
 - type : String
+- status : String
 - foodList : ArrayList<FoodItem>
-- Date : long
-- OrderID : int
-- totalPrice : float
-- sumPrice(foodList f) : float
-- buildFoodList(FoodItem f) : void
-+ updateStatus() : Boolean
-+ addFoodItem(FoodItem f)) : Boolean
-+ getStatus() : String
-+ getType() : String
-+ getFoodList() : ArrayList<FoodItem>
-+ getDate() : long
-+ getOrderID() : int
-+ getTotalPrice() : float
+
++ Order(orderID : int, type : String, date : long, foodList : List<FoodItem>)
++ sumPrice () : double
++ addFoodItem(f : FoodItem) : boolean
++ toString () : String
 }
 
 class Parser {
-+ parseJSONOrder() : Order
-+ exportOrder() : void
++ parseJSONOrder(file : File) : Order
++ exportOrdersToJSON (fileName : String, orderDriver : OrderDriver)
 }
 
 class OrderDriver {
 - orders : List<Order>
-- incompleteOrders : List<Order>
-- completeOrder : List<Order>
-- incomingOrder : Order
-+ startIncomingOrder(order) : void
-+ displayIncomingOrder() : void
-+ completeIncomingOrder() : void
-+ displayAll() : void
-+ addOrder(Order order) : Boolean
-+ completeAllOrders() : Boolean
+- impcompleteOrders : List<Order>
+- completeOrders : List<Order>
+
++ addOrder (order : Order) : void
++ startOrder (order : Order) : void
++ completeOrder (order : Order) : void
++ completeAllOrders () : void
++ displayOrder (orderID : int) : String
 }
 
 

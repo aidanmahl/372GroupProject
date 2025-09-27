@@ -51,11 +51,11 @@ public class Parser {
      * and put them in a file in the directory code/src/main/java/export
      *
      * note: export is not pretty to do that we need libraries GSON or Jackson
-     * @param filename
+     * @param fileName
      * @param orderDriver
      * @return
      */
-    public static boolean exportOrdersToJSON(String filename, OrderDriver orderDriver) {
+    public static boolean exportOrdersToJSON(String fileName, OrderDriver orderDriver) {
         boolean exportSuccess;
 
         JSONArray ordersArray = new JSONArray();
@@ -82,7 +82,7 @@ public class Parser {
 
         //The literal file path
         String fileDirectory = "code/src/main/java/Export";
-        String filePath = fileDirectory + "/" + filename;
+        String filePath = fileDirectory + "/" + fileName;
 
         //checks if directory exists and if it successfully created the directory
         File fileDir = new File(fileDirectory);
