@@ -48,10 +48,22 @@ class Order {
 - status : String
 - foodList : ArrayList<FoodItem>
 
-+ Order(orderID : int, type : String, date : long, foodList : List<FoodItem>)
-+ sumPrice () : double
++ Order()
++ Order(orderId : int, type : String, date : long, foodList : List<FoodItem>)
++ getOrderId() : int
++ getDate() : long
++ getTotalPrice() : double
++ getType() : String
++ getStatus() : String
++ getFoodList() : ArrayList<FoodItem>
++ sumPrice() : double
 + addFoodItem(f : FoodItem) : boolean
-+ toString () : String
++ setStatus(newStatus : String) : void
++ toString() : String
+'+ Order(orderID : int, type : String, date : long, foodList : List<FoodItem>)
+'+ sumPrice () : double
+'+ addFoodItem(f : FoodItem) : boolean
+'+ toString () : String
 }
 
 class Parser {
