@@ -65,9 +65,7 @@ public class SystemGUI {
         completeOrderBtn.addActionListener(e -> new OrderSelectionDropdown(frame, driver, OrderSelectionDropdown.Action.COMPLETE)); // opens dropdown with COMPLETE action
         displayOrderBtn.addActionListener(e -> new DisplayOrdersDialog(frame, driver));
         addOrderBtn.addActionListener(e -> ShowFileChooser.importOrder(frame, driver)); // opens file chooser and imports JSON to Parser
-        exportBtn.addActionListener(e ->
-                JOptionPane.showMessageDialog(frame, "Export not yet implemented.", "Export", JOptionPane.INFORMATION_MESSAGE)
-        );
+        exportBtn.addActionListener(e -> ExportJSON.exportOrders(frame, driver));
         exitBtn.addActionListener(e -> frame.dispose());
 
         // Add buttons to the frame

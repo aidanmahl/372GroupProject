@@ -56,56 +56,6 @@ public class OrderDriver {
         return "Order not found.";
     }
 
-    public static boolean exportOrdersToJSON(String filename, OrderDriver orderDriver) {
-        boolean exportSuccess;
-
-        JSONArray ordersArray = new JSONArray();
-        for (Order order : orderDriver.getCompleteOrders()) {
-            JSONObject ordersJSON = new JSONObject();
-            ordersJSON.put("orderID", order.getOrderID());
-            ordersJSON.put("date", order.getDate());
-            ordersJSON.put("type", order.getType());
-            ordersJSON.put("completeTime", System.currentTimeMillis()); //should we add a complete time attribute to orders? - Rocky
-
-            JSONArray orderFoodsList = new JSONArray();
-            for (FoodItem food : order.getFoodList()){
-                JSONObject foodJSON = new JSONObject();
-                foodJSON.put("name", food.getName());
-                foodJSON.put("quantity", food.getQuantity());
-                foodJSON.put("price", food.getPrice());
-                orderFoodsList.add(foodJSON);
-            }
-
-            ordersArray.add(ordersJSON);
-        }
-
-        //The literal file path
-        String fileDirectory = "code/src/main/java/Export";
-        String filePath = fileDirectory + "/" + filename;
-
-        //checks if directory exists and if it successfully created the directory
-        File fileDir = new File(fileDirectory);
-        if (!fileDir.exists()) {
-            boolean created = fileDir.mkdir();
-            if (!created) {
-                System.out.println("Error creating directory: " + fileDirectory);
-            } else {
-                System.out.println("Directory created: " + fileDirectory);
-            }
-        }
-
-        //write ordersArray to a file
-        try(FileWriter fw = new FileWriter(filePath)) {
-            fw.write(ordersArray.toJSONString());
-            fw.flush();
-            exportSuccess = true;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return exportSuccess; //to be implemented
-    }
-
     //getters
     public List<Order> getOrders() {
         return orders;
