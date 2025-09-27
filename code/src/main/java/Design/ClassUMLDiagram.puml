@@ -1,6 +1,8 @@
 @startuml
 'https://plantuml.com/class-diagram
 
+'test
+
 class FoodItem {
 - name : String
 - quantity : int
