@@ -47,7 +47,10 @@ public class Parser {
     }
 
     /**
+     * The exportOrdersToJSON will create A JSONArray of the completedOrders list
+     * and put them in a file in the directory code/src/main/java/export
      *
+     * note: export is not pretty to do that we need libraries GSON or Jackson
      * @param filename
      * @param orderDriver
      * @return
