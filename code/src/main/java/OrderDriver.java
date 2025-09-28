@@ -95,18 +95,16 @@ public class OrderDriver {
      * and puts them in a file in the directory code/src/main/java/export.
      * note: export is not pretty to do that we need libraries GSON or Jackson
      *
+     * @param fileName      The name of the file to export to
      * @param orderDriver   The OrderDriver instance containing all orders
      * @return              true if the export succeeds, false otherwise
      */
-    public static String exportOrdersToJSON(OrderDriver orderDriver) {
-
-        // format current time to CST for filename
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
-        sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Chicago")); // CST
-        String formattedTime = sdf.format(new java.util.Date());
-        String exportFileName = "Export_" + formattedTime + "CST.json";
+    public static boolean exportOrdersToJSON(String fileName, OrderDriver orderDriver) {
 
         JSONArray ordersArray = new JSONArray();
+        if (orderDriver.getOrders().isEmpty()) {
+            return false; // no orders to export
+        }
         for (Order order : orderDriver.getOrders()) {
             JSONObject ordersJSON = new JSONObject();
             ordersJSON.put("orderID", order.getOrderID());
@@ -131,13 +129,14 @@ public class OrderDriver {
         }
 
         String fileDirectory = "code/src/main/java/Export";
-        String filePath = fileDirectory + "/" + exportFileName;
+        String filePath = fileDirectory + "/" + fileName;
 
         File fileDir = new File(fileDirectory);
         if (!fileDir.exists()) {
             boolean created = fileDir.mkdir();
             if (!created) {
                 System.out.println("Error creating directory: " + fileDirectory);
+                return false;
             } else {
                 System.out.println("Directory created: " + fileDirectory);
             }
@@ -155,10 +154,10 @@ public class OrderDriver {
             fw.write("\n]");
             fw.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return false;
         }
 
-        return exportFileName;
+        return true;
     }
 
     /**

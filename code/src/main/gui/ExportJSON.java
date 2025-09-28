@@ -10,9 +10,18 @@ import javax.swing.*;
  */
 public class ExportJSON {
     public static void exportOrders(JFrame parentFrame, OrderDriver orderDriver) {
-        String fileName = OrderDriver.exportOrdersToJSON(orderDriver);
+        // format current time to CST for filename
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Chicago")); // CST
+        String formattedTime = sdf.format(new java.util.Date());
+        String fileName = "Export_" + formattedTime + "CST.json";
+        if (OrderDriver.exportOrdersToJSON(fileName, orderDriver)) {
+            JOptionPane.showMessageDialog(parentFrame, "Exported Orders to " + fileName + "\n");
+        } else {
+            JOptionPane.showMessageDialog(parentFrame, "Failed to export orders.", "Error", JOptionPane.ERROR_MESSAGE);
 
-        JOptionPane.showMessageDialog(parentFrame, "Exported Orders to " + fileName + "\n");
+
         }
     }
+}
 
