@@ -1,12 +1,12 @@
-package main.java; /**
- * Order class.
- */
+package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a customer's order in the system.
+ */
 public class Order {
-    // Properties
     private int orderId;
     private long date;
     private double totalPrice;
@@ -14,13 +14,22 @@ public class Order {
     private String status;
     private ArrayList<FoodItem> foodList;
 
-    // Empty constructor
+    /**
+     * Creates an empty order with the status set to "INCOMING" and an empty food list (empty constructor).
+     */
     public Order() {
         this.foodList = new ArrayList<>();
         this.status = "INCOMING";
     }
 
-    // Constructor
+    /**
+     * Creates a new order with the given ID, type, date, and an initial list of food items.
+     *
+     * @param orderId   The unique ID of the order
+     * @param type      The type of order
+     * @param date      The timestamp of the order
+     * @param foodList  The initial list of food items
+     */
     public Order(int orderId, String type, long date, List<FoodItem> foodList) {
         this.orderId = orderId;
         this.type = type;
@@ -34,41 +43,73 @@ public class Order {
         this.totalPrice = sumPrice();
     }
 
-    // Getters
+    /**
+     * Gets the unique ID of the order.
+     *
+     * @return The order ID
+     */
     public int getOrderId() {
         return orderId;
     }
 
+    /**
+     * Gets the date when the order was placed.
+     *
+     * @return The order date
+     */
     public long getDate() {
         return date;
     }
 
+    /**
+     * Gets the total price of the order.
+     *
+     * @return The total price
+     */
     public double getTotalPrice() {
         return totalPrice;
     }
 
+    /**
+     * Gets the type of the order.
+     *
+     * @return The order type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Gets the current status of the order.
+     *
+     * @return The order status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Gets the list of food items in the order.
+     *
+     * @return The list of food items
+     */
     public ArrayList<FoodItem> getFoodList() {
         return foodList;
     }
 
+    /**
+     * Gets the unique ID of the order.
+     *
+     * @return The order ID
+     */
     public int getOrderID() {
         return orderId;
     }
 
-    // Methods
-
     /**
      * Recalculates the total price of the current food list.
      *
-     * @return the total sum price of the order
+     * @return The sum of all food items' prices multiplied by their quantities
      */
     public double sumPrice() {
         double sum = 0.0;
@@ -88,10 +129,9 @@ public class Order {
 
     /**
      * Adds a single FoodItem to the order's food list.
-     * Initializes the list if it has not been created yet.
      *
-     * @param f the foodItem to add
-     * @return true if the item was added, false if the item is null
+     * @param f The FoodItem to add
+     * @return  true if the item was added successfully, false if the item is null
      */
     public boolean addFoodItem(FoodItem f) {
         if (f == null) {
@@ -111,19 +151,21 @@ public class Order {
         return priceUpdate;
     }
 
-    //INCOMING, IN PROGRESS, COMPLETED
+    /**
+     * Updates the status of the order.
+     *
+     * @param newStatus The new status
+     */
     public void setStatus(String newStatus) {
         if (newStatus.equals("IN PROGRESS") || newStatus.equals("COMPLETED") || newStatus.equals("INCOMING")) {
             status = newStatus;
         }
     }
 
-
     /**
-     * (Will need to iterate food list, should be implemented as a toString for foodList object or have to handle array to string implementation. - joseph)
-     * toString method for Order objects. returns a formatted string containing all info from order object
+     * Returns a formatted string representing the order, including all food items.
      *
-     * @return String, formatted order
+     * @return A formatted string of the order
      */
     @Override
     public String toString() {
