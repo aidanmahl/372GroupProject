@@ -15,13 +15,14 @@ public class ExportJSON {
         sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Chicago")); // CST
         String formattedTime = sdf.format(new java.util.Date());
         String fileName = "Export_" + formattedTime + "CST.json";
+        if (orderDriver.getOrders().isEmpty()) {
+            JOptionPane.showMessageDialog(parentFrame, "No orders to export.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (OrderDriver.exportOrdersToJSON(fileName, orderDriver)) {
             JOptionPane.showMessageDialog(parentFrame, "Exported Orders to " + fileName + "\n");
         } else {
             JOptionPane.showMessageDialog(parentFrame, "Failed to export orders.", "Error", JOptionPane.ERROR_MESSAGE);
-
-
         }
     }
 }
-
