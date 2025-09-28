@@ -44,15 +44,6 @@ public class Order {
     }
 
     /**
-     * Gets the unique ID of the order.
-     *
-     * @return The order ID
-     */
-    public int getOrderId() {
-        return orderId;
-    }
-
-    /**
      * Gets the date when the order was placed.
      *
      * @return The order date
