@@ -66,14 +66,6 @@ public class OrderDriver {
         }
     }
 
-    /**
-     * Completes all orders that are currently in the incompleteOrders list.
-     */
-    public void completeAllOrders() {
-        for (Order order : incompleteOrders) {
-            completeOrder(order);
-        }
-    }
 
     /**
      * Finds an order by its ID and returns its details as a formatted string.
