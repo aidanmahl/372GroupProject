@@ -1,14 +1,11 @@
 @startuml
 'https://plantuml.com/sequence-diagram
-
 actor RestaurantStaff
 participant SystemGUI
 participant ShowFileChooser
 participant Parser
 participant OrderDriver
-participant ExportJSON
 
-'Import
 RestaurantStaff -> SystemGUI : Click "Import Order JSON" button
 SystemGUI -> ShowFileChooser : importOrder(parentFrame, driver)
 ShowFileChooser -> ShowFileChooser : Open file chooser
@@ -20,17 +17,5 @@ ShowFileChooser -> OrderDriver : addOrder(order)
 OrderDriver --> ShowFileChooser : Confirmation
 ShowFileChooser --> SystemGUI : Show message "JSON imported into Order #ID"
 SystemGUI --> RestaurantStaff : Display confirmation
-
-'Export
-RestaurantStaff -> SystemGUI : Click "Export All Orders to JSON" button
-SystemGUI -> ExportJSON : exportOrders(frame, driver)
-ExportJSON -> OrderDriver : exportOrdersToJSON(fileName, driver)
-OrderDriver --> ExportJSON : Confirmation
-ExportJSON --> SystemGUI : Show message "Exported Orders to JSON"
-SystemGUI --> RestaurantStaff : Display confirmation
-
-'Exit
-RestaurantStaff -> SystemGUI : Click "Exit" button
-SystemGUI --> RestaurantStaff : Close application
 
 @enduml
