@@ -110,8 +110,7 @@ public class Order {
         }
 
         // Calculates the total price of all items in the food list
-        for (int i = 0; i < foodList.size(); i++) {
-            FoodItem item = foodList.get(i);
+        for (FoodItem item : foodList) {
             sum = sum + item.getPrice() * item.getQuantity();
         }
 
