@@ -40,7 +40,9 @@ class Order {
 }
 
 class Parser {
-+ parseJSONOrder(file : File) : Order
+- {static} nextOrderNumber : int
++ {static} parseJSONOrder(file : File) : Order
+- {static} getNextOrderNumber() : int
 }
 
 class OrderDriver {
@@ -101,6 +103,7 @@ OrderDriver -- "0..*" Order
 Order *-- "0..*" FoodItem
 
 Parser ..> Order
+Parser .. ShowFileChooser
 
 SystemGUI -[hidden]-> OrderDriver
 OrderDriver -[hidden]-> Order
