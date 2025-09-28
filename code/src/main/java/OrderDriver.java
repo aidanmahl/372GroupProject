@@ -9,22 +9,41 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Manages a collection of orders in the system.
+ * Provides methods to add, start, complete, display, and export orders.
+ */
 public class OrderDriver {
     private List<Order> orders;
     private List<Order> incompleteOrders;
     private List<Order> completeOrders;
 
+    /**
+     * Constructs a new OrderDriver with empty lists for all orders, incomplete orders, and completed orders (empty constructor).
+     */
     public OrderDriver() {
         orders = new ArrayList<>();
         incompleteOrders = new ArrayList<>();
         completeOrders = new ArrayList<>();
     }
 
+    /**
+     * Adds a new order to the system.
+     * The order is added to both the list of all orders and the list of incomplete orders.
+     *
+     * @param order The order to add
+     */
     public void addOrder(Order order) {
         orders.add(order);
         incompleteOrders.add(order); // this list maybe not necessary, gui searches by status in for loops
     }
 
+    /**
+     * Starts an order if its status is "INCOMING".
+     * Changes the status of the order to "IN PROGRESS".
+     *
+     * @param order The order to start
+     */
     public void startOrder(Order order) {
         // only start if it's incoming, otherwise do nothing
         if ("INCOMING".equals(order.getStatus())) {
@@ -32,6 +51,12 @@ public class OrderDriver {
         }
     }
 
+    /**
+     * Completes an order if its status is "IN PROGRESS".
+     * Changes the status to "COMPLETED", removes it from incompleteOrders, and adds it to completeOrders.
+     *
+     * @param order The order to complete
+     */
     public void completeOrder(Order order) {
         // only complete if it's in progress, otherwise do nothing
         if ("IN PROGRESS".equals(order.getStatus())) {
@@ -41,13 +66,22 @@ public class OrderDriver {
         }
     }
 
+    /**
+     * Completes all orders that are currently in the incompleteOrders list.
+     */
     public void completeAllOrders() {
         for (Order order : incompleteOrders) {
             completeOrder(order);
         }
     }
 
-    public String displayOrder(int orderID) { //given an order ID, convert its fields to a string and return to GUI.
+    /**
+     * Finds an order by its ID and returns its details as a formatted string.
+     *
+     * @param orderID   The unique ID of the order
+     * @return          A string representation of the order, or "Order not found" if no order matches the ID
+     */
+    public String displayOrder(int orderID) {
         for (Order order : orders) {
             if (order.getOrderID() == orderID) {
                 return order.toString();
@@ -57,13 +91,13 @@ public class OrderDriver {
     }
 
     /**
-     * The exportOrdersToJSON will create A JSONArray of the completedOrders list
-     * and put them in a file in the directory code/src/main/java/export
-     *
+     * Creates a JSONArray of the completedOrders list
+     * and puts them in a file in the directory code/src/main/java/export.
      * note: export is not pretty to do that we need libraries GSON or Jackson
-     * @param fileName
-     * @param orderDriver
-     * @return
+     *
+     * @param fileName      The name of the JSON file
+     * @param orderDriver   The OrderDriver instance containing completed orders
+     * @return              true if the export succeeds, false otherwise
      */
     public static boolean exportOrdersToJSON(String fileName, OrderDriver orderDriver) {
         boolean exportSuccess;
@@ -117,13 +151,26 @@ public class OrderDriver {
         return exportSuccess; //to be implemented
     }
 
-    //getters
+    /**
+     * Returns a list of all orders in the system.
+     *
+     * @return List of all orders
+     */
     public List<Order> getOrders() {
         return orders;
     }
 
+    /**
+     * Returns a list of completed orders.
+     *
+     * @return List of completed orders
+     */
     public List<Order> getCompleteOrders() { return completeOrders; }
 
+    /**
+     * Returns a list of incomplete orders.
+     *
+     * @return List of incomplete orders
+     */
     public List<Order> getIncompleteOrders() { return incompleteOrders; }
-
 }
