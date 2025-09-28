@@ -7,8 +7,6 @@ import org.json.simple.parser.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 /**
  * Parser adapter class that reads a JSON file and creates a corresponding Order object.
  * Populates the Order with data from the JSON file.
@@ -16,6 +14,10 @@ import java.util.Random;
  * @author Joseph Murtha hw4546dw
  */
 public class Parser {
+    private static int nextOrderNumber = 1;
+
+
+
     /**
      * Parser method creates order object with data populated from given JSON file.
      * Generates a random orderID for the Order.
@@ -35,18 +37,24 @@ public class Parser {
         orderDate = (long) orderJson.get("order_date");
         orderType = (String) orderJson.get("type");
         JSONArray itemArray = (JSONArray) orderJson.get("items");
-        for(int i=0; i< itemArray.size(); i++){
-            int quantity =  (int) (long) ((JSONObject) itemArray.get(i)).get("quantity");
-            double price = (double) ((JSONObject) itemArray.get(i)).get("price");
-            String name = (String) ((JSONObject) itemArray.get(i)).get("name");
-            foodItemList.add(new FoodItem(name,quantity,price));
+        for (Object o : itemArray) {
+            int quantity = (int) (long) ((JSONObject) o).get("quantity");
+            double price = (double) ((JSONObject) o).get("price");
+            String name = (String) ((JSONObject) o).get("name");
+            foodItemList.add(new FoodItem(name, quantity, price));
 
         }
-
-        Random r = new Random();
-        return new Order(r.nextInt(100),orderType,orderDate,foodItemList);
+        return new Order(getNextOrderNumber(),orderType,orderDate,foodItemList);
     }
 
+    /**
+     * Static helper method
+     * returns next order number and increments the counter
+     * @return int, next Order ID number
+     */
+    private static int getNextOrderNumber(){
+        return nextOrderNumber++;
+    }
     /**
      * Main test method for the Parser class.
      * Uses a hardcoded JSON file to test the parser method.

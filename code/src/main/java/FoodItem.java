@@ -21,9 +21,9 @@ public class FoodItem {
     /**
      * Creates a FoodItem with the specified name, quantity, and price (non-empty constructor).
      *
-     * @param name      The name of the food item
-     * @param quantity  The number of units of the food item
-     * @param price     The price per unit of the food item
+     * @param name      String, The name of the food item
+     * @param quantity  int, The number of units of the food item
+     * @param price     double, The price per unit of the food item
      */
 	public FoodItem(String name, int quantity, double price) {
 		this.name = name;
@@ -34,7 +34,7 @@ public class FoodItem {
     /**
      * Returns the name of the food item.
      *
-     * @return  The name of the food item
+     * @return  String, The name of the food item
      */
 	public String getName() {
 		return name;
@@ -43,7 +43,7 @@ public class FoodItem {
     /**
      * Sets the name of the food item.
      *
-     * @param name The name of the food item
+     * @param name String, The name of the food item
      */
 	public void setName(String name) {
 		this.name = name;
@@ -52,7 +52,7 @@ public class FoodItem {
     /**
      * Returns the quantity of the food item.
      *
-     * @return The quantity of the food item
+     * @return int, The quantity of the food item
      */
 	public int getQuantity() {
 		return quantity;
@@ -61,7 +61,7 @@ public class FoodItem {
     /**
      * Sets the quantity of the food item.
      *
-     * @param quantity The number of units of the food item
+     * @param quantity int, The number of units of the food item
      */
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
@@ -70,7 +70,7 @@ public class FoodItem {
     /**
      * Returns the price per unit of the food item.
      *
-     * @return The price per unit of the food item
+     * @return double, The price per unit of the food item
      */
 	public double getPrice() {
 		return price;
@@ -79,7 +79,7 @@ public class FoodItem {
     /**
      * Sets the price per unit of the food item.
      *
-     * @param price The price per unit of the food item
+     * @param price double, The price per unit of the food item
      */
 	public void setPrice(double price) {
 		this.price = price;
