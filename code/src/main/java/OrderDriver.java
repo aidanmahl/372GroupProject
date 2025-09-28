@@ -91,24 +91,30 @@ public class OrderDriver {
     }
 
     /**
-     * Creates a JSONArray of the completedOrders list
+     * Creates a JSONArray of the Orders list
      * and puts them in a file in the directory code/src/main/java/export.
      * note: export is not pretty to do that we need libraries GSON or Jackson
      *
-     * @param fileName      The name of the JSON file
-     * @param orderDriver   The OrderDriver instance containing completed orders
+     * @param orderDriver   The OrderDriver instance containing all orders
      * @return              true if the export succeeds, false otherwise
      */
-    public static boolean exportOrdersToJSON(String fileName, OrderDriver orderDriver) {
-        boolean exportSuccess;
+    public static String exportOrdersToJSON(OrderDriver orderDriver) {
+
+        // format current time to CST for filename
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Chicago")); // CST
+        String formattedTime = sdf.format(new java.util.Date());
+        String exportFileName = "Export_" + formattedTime + "CST.json";
 
         JSONArray ordersArray = new JSONArray();
-        for (Order order : orderDriver.getCompleteOrders()) {
+        for (Order order : orderDriver.getOrders()) {
             JSONObject ordersJSON = new JSONObject();
             ordersJSON.put("orderID", order.getOrderID());
+            ordersJSON.put("status", order.getStatus());
+            ordersJSON.put("totalPrice", String.format("%.2f", order.getTotalPrice()));
             ordersJSON.put("date", order.getDate());
             ordersJSON.put("type", order.getType());
-            ordersJSON.put("completeTime", System.currentTimeMillis()); //should we add a complete time attribute to orders? - Rocky
+            ordersJSON.put("completeTime", System.currentTimeMillis());
 
             JSONArray orderFoodsList = new JSONArray();
             for (FoodItem food : order.getFoodList()){
@@ -124,11 +130,9 @@ public class OrderDriver {
             ordersArray.add(ordersJSON);
         }
 
-        //The literal file path
         String fileDirectory = "code/src/main/java/Export";
-        String filePath = fileDirectory + "/" + fileName;
+        String filePath = fileDirectory + "/" + exportFileName;
 
-        //checks if directory exists and if it successfully created the directory
         File fileDir = new File(fileDirectory);
         if (!fileDir.exists()) {
             boolean created = fileDir.mkdir();
@@ -139,16 +143,22 @@ public class OrderDriver {
             }
         }
 
-        //write ordersArray to a file
+        // write ordersArray to a file as a single JSON array, with newlines between objects
         try(FileWriter fw = new FileWriter(filePath)) {
-            fw.write(ordersArray.toJSONString());
+            fw.write("[\n");
+            for (int i = 0; i < ordersArray.size(); i++) {
+                fw.write(ordersArray.get(i).toString());
+                if (i < ordersArray.size() - 1) {
+                    fw.write(",\n");
+                }
+            }
+            fw.write("\n]");
             fw.flush();
-            exportSuccess = true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return exportSuccess; //to be implemented
+        return exportFileName;
     }
 
     /**
