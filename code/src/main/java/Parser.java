@@ -10,19 +10,20 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Parser adapter class that takes a JSON file input and creates a new Order.java object. This object is populated with data from JSON file.
+ * Parser adapter class that reads a JSON file and creates a corresponding Order object.
+ * Populates the Order with data from the JSON file.
  * Created for ICS 372-01
  * @author Joseph Murtha hw4546dw
  */
 public class Parser {
-
     /**
-     * Parser method creates order object with data populated from given JSON file. Creates a RANDOM orderID when created.
+     * Parser method creates order object with data populated from given JSON file.
+     * Generates a random orderID for the Order.
      *
-     * @param file JSON file to be read
-     * @return  Order object correctly populated
-     * @throws IOException File not found
-     * @throws ParseException JSON simple could not properly parse the file. Possibly not JSON file or incorrectly formatted.
+     * @param file              JSON file to be read
+     * @return                  Order object populated with data from the JSON file
+     * @throws IOException      if the file cannot be read
+     * @throws ParseException   if the JSON file is invalid or incorrectly formatted
      */
 	public static Order parseJSONOrder(File file) throws IOException, ParseException {
         long orderDate;
@@ -47,9 +48,9 @@ public class Parser {
     }
 
     /**
-     * Main test method for parser class
-     * Uses hardcoded JSON file to check parser method.
-     * prints to console
+     * Main test method for the Parser class.
+     * Uses a hardcoded JSON file to test the parser method.
+     * Prints to console.
      */
     public static void main(String[] args) throws IOException, ParseException {
         File file = new File("code/src/main/java/Resources/order_09-16-2025_10-00.json");
@@ -57,4 +58,3 @@ public class Parser {
         System.out.println(myOrder);
     }
 }
-		
