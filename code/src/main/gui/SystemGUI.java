@@ -14,8 +14,8 @@ import java.awt.*;
  * Display Order(s) button will open a choice dialog--
  *     Choosing individual order will open a dropdown menu to select an order from the list of orders.
  *     Choosing a group of orders will display all orders grouped by that status.
- * The Add New Order JSON button opens a file chooser dialog to select a JSON file to import and send to Parser.
- * The Export All Orders to JSON button is a placeholder for future implementation.
+ * The Import Order JSON button opens a file chooser dialog to select a JSON file to import and send to Parser.
+ * The Export All Orders to JSON button will export all currently stored orders to a JSON file.
  * The Exit button closes the application.
  */
 public class SystemGUI {
