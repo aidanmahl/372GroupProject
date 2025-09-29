@@ -13,7 +13,7 @@ This project is a FoodHub Order Management System with a graphical user interfac
 - **Start Incoming Order:** Mark an "INCOMING" order as "IN PROGRESS".
 - **Complete In-Progress Order:** Mark an "IN PROGRESS" order as "COMPLETED".
 - **Import Order JSON:** Add new orders by selecting a JSON file. It will open the code/src/main/java/Resources directory in a file explorer by default, but you may browse and choose a file from elsewhere.
-- **Export All Orders to JSON:** Save all orders to a JSON file (valid array format) to the Exports directory, creating such directory if it does not exist.
+- **Export All Orders to JSON:** Save all orders to a JSON file to the Exports directory, creating such directory if it does not exist.
 - **Exit:** Close the application.
 
 ## How to Run
