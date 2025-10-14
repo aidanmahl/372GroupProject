@@ -1,6 +1,6 @@
 {
 	"order": {
-		"type": "pickup",
+		"type": "delivery",
 		"order_date": 1758033000000,
 		"items": [
 			{

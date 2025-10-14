@@ -1,6 +1,6 @@
 <Orders>
     <Order id="1758043800000">
-        <OrderType>Delivery</OrderType>
+        <OrderType>togo</OrderType>
         <Item type="Crispy Chicken Sandwich">
             <Price>6.79</Price>
             <Quantity>3</Quantity>

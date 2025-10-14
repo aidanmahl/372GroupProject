@@ -1,6 +1,6 @@
 <Orders>
     <Order id="1758047400000">
-        <OrderType>togo</OrderType>
+        <OrderType>pickup</OrderType>
         <Item type="Fountain Drink">
             <Price>2.79</Price>
             <Quantity>2</Quantity>

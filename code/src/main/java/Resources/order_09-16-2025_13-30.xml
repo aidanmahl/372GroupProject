@@ -1,6 +1,6 @@
 <Orders>
     <Order id="1758040200000">
-        <OrderType>Delivery</OrderType>
+        <OrderType>delivery</OrderType>
         <Item type="Root Beer Float">
             <Price>5.29</Price>
             <Quantity>1</Quantity>
