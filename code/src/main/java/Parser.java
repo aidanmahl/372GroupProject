@@ -15,9 +15,6 @@ import java.util.List;
  */
 public class Parser {
     private static int nextOrderNumber = 1;
-
-
-
     /**
      * Parser method creates order object with data populated from given JSON file.
      * Generates a random orderID for the Order.
