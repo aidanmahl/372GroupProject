@@ -1,0 +1,13 @@
+<Orders>
+    <Order id="1758047400000">
+        <OrderType>togo</OrderType>
+        <Item type="Fountain Drink">
+            <Price>2.79</Price>
+            <Quantity>2</Quantity>
+        </Item>
+        <Item type="Crispy Chicken Sandwich">
+            <Price unit="dollars">6.79</Price>
+            <Quantity>2</Quantity>
+        </Item>
+    </Order>
+</Orders>

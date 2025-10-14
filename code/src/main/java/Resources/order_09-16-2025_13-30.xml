@@ -1,0 +1,17 @@
+<Orders>
+    <Order id="1758040200000">
+        <OrderType>Delivery</OrderType>
+        <Item type="Root Beer Float">
+            <Price>5.29</Price>
+            <Quantity>1</Quantity>
+        </Item>
+        <Item type="Grilled Chicken Sandwich">
+            <Price>7.39</Price>
+            <Quantity>2</Quantity>
+        </Item>
+        <Item type="Cheese Curds">
+            <Price unit="dollars">4.79</Price>
+            <Quantity>1</Quantity>
+        </Item>
+    </Order>
+</Orders>

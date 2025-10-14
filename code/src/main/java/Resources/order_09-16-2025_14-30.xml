@@ -1,0 +1,21 @@
+<Orders>
+    <Order id="1758043800000">
+        <OrderType>Delivery</OrderType>
+        <Item type="Crispy Chicken Sandwich">
+            <Price>6.79</Price>
+            <Quantity>3</Quantity>
+        </Item>
+        <Item type="Fries">
+            <Price>3.09</Price>
+            <Quantity>3</Quantity>
+        </Item>
+        <Item type="Milkshake">
+            <Price>5.09</Price>
+            <Quantity>1</Quantity>
+        </Item>
+        <Item type="Smoothie">
+            <Price unit="dollars">5.09</Price>
+            <Quantity>2</Quantity>
+        </Item>
+    </Order>
+</Orders>
