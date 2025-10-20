@@ -1,0 +1,19 @@
+@startuml
+Actor RestaurantStaff
+participant SystemGUI
+participant System
+
+RestaurantStaff -> SystemGUI : clickActiveOrders
+SystemGUI -> System : getOrders
+System -> SystemGUI : Orders
+RestaurantStaff -> SystemGUI : Select Order
+RestaurantStaff -> SystemGUI : clickCancelOrder
+SystemGUI -> System : removeOrder
+System -> SystemGUI : Status
+
+alt status = success
+    SystemGUI -> RestaurantStaff : removeOrderSuccessMessage
+else status = failure
+    SystemGUI -> RestaurantStaff : removeOrderFailureMessage
+end
+@enduml
