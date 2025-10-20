@@ -1,0 +1,22 @@
+@startuml
+actor RestaurantStaff
+participant SystemGUI
+participant System
+
+RestaurantStaff -> SystemGUI: Import Orders
+SystemGUI -> System: showFileChooser
+System -> SystemGUI: Available Files
+RestaurantStaff -> SystemGUI: Select File
+SystemGUI -> System: typeCheck
+System -> SystemGUI: status
+
+alt status = XML or JSON
+    System -> System :AddOrder
+    System -> SystemGUI : Accepted
+    SystemGUI -> RestaurantStaff : importSuccessfulMessage
+
+else status = Not XML or JSON
+System -> SystemGUI :Rejected
+SystemGUI -> RestaurantStaff : ImportFailedTypeCheckMessage
+end
+@enduml
