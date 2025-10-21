@@ -1,0 +1,20 @@
+@startuml
+actor RestaurantStaff
+participant SystemGUI
+participant System
+
+RestaurantStaff -> SystemGUI : clickCloseButton
+SystemGUI -> System : ExportJSON
+
+alt Export Success
+System -> SystemGUI : quit
+else Export Failure
+System -> SystemGUI : ExportErrorMessage
+end
+
+RestaurantStaff -> SystemGUI : Start
+SystemGUI -> System : loadDirectoryJSON
+System -> System : load orders
+System -> SystemGUI : Display Orders
+
+@enduml
